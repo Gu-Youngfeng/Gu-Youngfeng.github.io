@@ -1,0 +1,136 @@
+/**
+ * @author: yongfeng Gu
+ * @page: index.html
+ * @date: Apr.15th,2016
+ * @update: Nov.29th,2017
+ */
+
+/*common part*/
+body{
+    position: relative;
+}
+#content p{
+	text-align:justify;
+}
+.footer p{
+	text-align:justify;
+}
+/*header part*/
+@media(max-width:900px){
+	header{
+		width: 100%;
+		background:#337ab7;
+	}
+	header h1{
+		color:#fff;
+		text-align:center;
+	}
+	header p{
+		text-align:center;
+		font-size:1.2em;
+	}
+}
+@media(min-width:900px){
+	header{
+		width: 100%;
+		background:url(../img/header-bg2.jpg) no-repeat center center;
+	}
+	header h1{
+		color:#fff;
+		text-align:left;
+	}
+	header p{
+		text-align:left;
+		font-size:1.2em;
+	}
+}
+.header-content{
+
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin: auto;
+    color:#fff;
+}
+.p-logo{
+    width: 120px;
+    height:120px;
+    margin: auto;
+    border:5px solid #435063;
+}
+.p-logo:hover{
+    opacity: 0.9;
+    border:5px solid #353535;
+}
+.header-content abbr{
+    color:#ccc;
+}
+.header-content abbr:hover{
+    color:#fff;
+}
+.header-content .sp-sklse{
+    color:#66afe9;
+}
+
+/*nav part*/
+nav{
+    background:#e6eaed;
+}
+nav li a{
+    color:#8fa5b0;
+}
+.navbar{
+    border-radius: 0!important;
+    margin-bottom: 0!important;
+}
+nav .container-fluid{
+    margin: auto;
+
+}
+
+/*content part*/
+#content{
+    background: #f5f6f8;
+    width: 100%;
+}
+#content .container-fluid{
+
+    margin: auto;
+}
+#content h3 b{
+    color:#286090;
+}
+#content .col-sm-6 .thumbnail{
+    height:430px;
+    box-shadow: 0px 0px 10px 5px #ddd;
+}
+.thumbnail .img-wrap{
+    margin:auto;
+    overflow: hidden;
+}
+.thumbnail .img-land{
+    width: 100%;
+}
+#content .img-land:hover{
+    cursor: pointer;
+    transition:all .5s ease-in-out .1s;
+    transform: scale(1.2);
+}
+
+/*footer part*/
+.footer{
+    width: 100%;
+    padding-bottom: 20px;
+    background: #e6eaed;
+}
+.footer .row{
+    margin: auto;
+}
+.footer .row p{
+    margin-bottom: 5px;
+}
+.footer .copy h4,.author h4,.share h4,.link h4{
+    color:#8fa5b0;
+}
+.footer author{
+	text-align: right;
+} 
