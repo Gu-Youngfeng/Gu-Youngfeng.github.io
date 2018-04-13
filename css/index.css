@@ -19,21 +19,22 @@ body{
 @media(max-width:900px){
 	header{
 		width: 100%;
-		background:#337ab7;
+		background:url(../img/mobile-bg4.jpg) no-repeat center center;
 	}
 	header h1{
 		color:#fff;
 		text-align:center;
+		font-size:20px;
 	}
 	header p{
 		text-align:center;
-		font-size:1.2em;
+		font-size:12px;
 	}
 }
 @media(min-width:900px){
 	header{
 		width: 100%;
-		background:url(../img/header-bg2.jpg) no-repeat center center;
+		background:url(../img/header-bg4.jpg) no-repeat center center;
 	}
 	header h1{
 		color:#fff;
