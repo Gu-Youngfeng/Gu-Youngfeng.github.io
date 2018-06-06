@@ -7,7 +7,7 @@
 
 /*common part*/
 body{
-    position: relative;
+	position: relative;
 }
 #content p{
 	text-align:justify;
@@ -15,32 +15,35 @@ body{
 .footer p{
 	text-align:justify;
 }
+.header{
+	margin-top:30px;
+}
 /*header part*/
 @media(max-width:900px){
-	header{
+	.header{
 		width: 100%;
 		background:url(../img/mobile-bg4.jpg) no-repeat center center;
 	}
-	header h1{
+	.header h1{
 		color:#fff;
 		text-align:center;
 		font-size:20px;
 	}
-	header p{
+	.header p{
 		text-align:center;
 		font-size:12px;
 	}
 }
 @media(min-width:900px){
-	header{
+	.header{
 		width: 100%;
 		background:url(../img/header-bg4.jpg) no-repeat center center;
 	}
-	header h1{
+	.header h1{
 		color:#fff;
 		text-align:left;
 	}
-	header p{
+	.header p{
 		text-align:left;
 		font-size:1.2em;
 	}
@@ -71,6 +74,9 @@ body{
 .header-content .sp-sklse{
     color:#66afe9;
 }
+.header h1{
+	font-weight:bold;
+}
 
 /*nav part*/
 nav{
@@ -86,6 +92,11 @@ nav li a{
 nav .container-fluid{
     margin: auto;
 
+}
+nav .name-logo{
+	width:120px;
+	height:48px;
+	background:url(../img/logo.png);
 }
 
 /*content part*/
@@ -120,6 +131,10 @@ nav .container-fluid{
     width: 50px;
     height:50px;
     margin-right: 20px;
+}
+#content .biography p:last-child{
+	padding-bottom:10px;
+	border-bottom:1px solid #ddd;
 }
 
 /*footer part*/

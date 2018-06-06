@@ -12,27 +12,13 @@
     <meta name="description" content="Yongfeng Gu is a phd candidate in School of Computer Science, Wuhan University. His current research direction is Crash Analysis, and he is also interested in Mining Software Repository and System Performance Analysis.">
     <title>Dr.Gu's HOME PAGE</title>
     <!--css links-->
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="css/index.css">
 </head>
-<body>
-<!--header starts-->
-<header class="header">
-    <div class="header-content container">
-        <div class="row">
-            <div class="col-sm-2">
-                <img src="img/p-logo.jpg" class="img-responsive img-circle p-logo">
-            </div>
-            <div class="col-sm-10">
-                <h1 title="yongfeng Gu is Dr.Gu">Yongfeng Gu</h1>
-				<p>PhD candidate at School of Computer Science, Wuhan University.</p>
-				<p>Contact me at: <b>yongfenggu [at] whu.edu.cn</b> or <b>yongfeng_gu [at] 163.com</b></p>
-            </div>
-        </div>
-    </div>
-</header>
+<body data-spy="scroll" data-target="#navbar-example2" data-offset="0">
 <!--nav starts-->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-example2">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -42,11 +28,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <!--<a class="navbar-brand" href="#">Brand</a>-->
+            <a class="navbar-brand name-logo" href="#"></a>
         </div>
         <!-- Collect the nav links-->
         <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="#biography">Biography</a></li>
                 <li><a href="#research">Research</a></li>
@@ -57,12 +43,29 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<!--header starts-->
+<div class="header">
+    <div class="header-content container">
+        <div class="row">
+            <div class="col-sm-2">
+                <img src="img/p-logo.jpg" class="img-responsive img-circle p-logo">
+            </div>
+            <div class="col-sm-10">
+                <h1 title="yongfeng Gu is Dr.Gu">Yongfeng Gu</h1>
+				<p>PhD candidate at School of Computer Science, Wuhan University.</p>
+				<p>Contact me at: <abbr title="school email">yongfenggu [at] whu.edu.cn</abbr> or <abbr title="163 email">yongfeng_gu [at] 163.com</abbr></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--content starts-->
 <div id="content">
-    <div class="container">
+    <div class="container biography">
         <h3 id="biography"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<b>B</b>iography</h3>
-        <p>Yongfeng Gu is a phd candidate in <a target="_blank"  href="http://cs.whu.edu.cn/">School of Computer Science</a>, Wuhan University. Early on, He received his bachelor degree in <a href="http://csi.hubu.edu.cn/" target="_blank">School of Computer Science and Information Engineering</a>, Hubei university, at 2015. Then in summer of 2015, He was admitted to <a target="_blank" href="http://www.whu.edu.cn/">Wuhan University</a> to continue his work for Master degree. In 2017, he decided to continue study for doctor degree in Computer software and theory, which is under the supervisor of Dr. <a target="_blank" href="http://www.jifeng-xuan.com/">Jifeng Xuan</a>.</p>
+		<p>Yongfeng Gu is a phd candidate in <a target="_blank"  href="http://cs.whu.edu.cn/">School of Computer Science</a>, Wuhan University. Early on, He received his bachelor degree in <a href="http://csi.hubu.edu.cn/" target="_blank">School of Computer Science and Information Engineering</a>, Hubei university, at 2015. Then in summer of 2015, He was admitted to <a target="_blank" href="http://www.whu.edu.cn/">Wuhan University</a> to continue his work for Master degree. In 2017, he decided to continue study for doctor degree in Computer software and theory, which is under the supervisor of Dr. <a target="_blank" href="http://www.jifeng-xuan.com/">Jifeng Xuan</a>.</p>
 		<p>His current research direction is <code>Crash Analysis</code>, and he is also interested in <code>Mining Software Repository</code> and <code>System Performance Analysis</code>.</p>
+		<p>In spare time, Yongfeng is also interested in writing blogs on <a href="http://blog.sina.com.cn/chasing4dream">Sina</a>, contributing to <a href="https://github.com/Gu-Youngfeng">GitHub</a>. What's more, He is also addicted to foods and sports.</p>
     </div>
     <div class="container research">
         <h3 id="research"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;<b>R</b>esearch</h3>
@@ -71,25 +74,25 @@
                 <h4>Crash Analysis</h4>
                 <p class="text-primary"><b>Crash Analysis</b>, which includes the analysis of crash reporting system, crash reproduction, crash localization, bug fixing and related empirical studies, is a vital process in software testing and debugging.</p>
                 <p>According to empirical studies, developer teams spend much than <b>45%</b> efforts on debugging and maintenance. Hence, question "How to reproduce, or location, or fix crashes effectively and efficiently?" have drawn continuous attentions from researchers.</p>
-                <p>
+                <!--<p>
                     <a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-                </p>
+                </p>-->
             </div>
             <div class="col-sm-4">
                 <h4>Mining Software Repository</h4>
                 <p class="text-primary">Mining Software Repository (<b>MSR</b>) aims to extract some interesting or potential patterns or information from the rich data in software repositories, such as version control systems, bug tracking systems, QA systems, etc..</p>
                 <p>The analysis strategies and mining algorithms in domain are borrowed from the area of statistical analysis and data mining. The study topics vary from the repositories, the common topics include developers' behaviors, bug fixing patterns, among others.</p>
-                <p>
+                <!--<p>
                     <a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-                </p>
+                </p>-->
             </div>
             <div class="col-sm-4">
                 <h4>System Performance Analysis</h4>
                 <p class="text-primary"><b>System Performance Analysis</b> focus on accurately predicting system performance with small samples. </p>
 				<p>The high flexibility of configurable systems and high cost of measurements make it hard for the prediction process. Considering that a system of <b>n</b> options can construct a huge configuration space of <b>2^n</b> configurations, it's infeasible to check every option combination. "How to make trade-off between accuracy and cost?" is the core question in this research area.</p>
-                <p>
+                <!--<p>
                     <a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-                </p>
+                </p>-->
             </div>
         </div>
     </div>
@@ -97,24 +100,24 @@
         <h3 id="papers"><span class="glyphicon glyphicon-duplicate"></span>&nbsp;&nbsp;<b>P</b>apers</h3>
         <div class="list-group">
             <a href="javascript:void(0)" class="list-group-item active">
-                <h4 class="list-group-item-heading">Conference or Journal papers&nbsp;&nbsp;<small>from 2015</small></h4>
-                <p class="list-group-item-text"></p>
+				<h4 class="list-group-item-heading">Conference or Journal papers&nbsp;&nbsp;<small>from 2015</small></h4>
+				<p class="list-group-item-text"></p>
             </a>
 			<a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">How do Multiple Pull Requests Change the same Code: A Study of Competing Pull Requests on GitHub&nbsp;&nbsp; <span class="label label-danger">New</span></h4>
-		    <p class="list-group-item-text">Xin Zhang, Yang Chen, <b>Yongfeng Gu</b>, Jifeng Xuan. Proceedings of the IEEE International Conference on Software Maintenance and Evolution (ICSME ’2018）</p>
+				<h4 class="list-group-item-heading">How do Multiple Pull Requests Change the same Code: A Study of Competing Pull Requests on GitHub&nbsp;&nbsp;<span class="label label-danger">New</span></h4>
+				<p class="list-group-item-text">Xin Zhang, Yang Chen, <b>Yongfeng Gu</b>, Jifeng Xuan. Proceedings of the IEEE International Conference on Software Maintenance and Evolution (ICSME ’2018）</p>
             </a>
 			<a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Genetic Configuration Sampling: Learning a Sampling Strategy for Fault Detection of Configurable Systems.&nbsp;&nbsp;</h4>
-		    <p class="list-group-item-text">Jifeng Xuan, <b>Yongfeng Gu</b>. Proceedings of the 5th International Workshop on Genetic Improvement(GI ’2018). </p>
+				<h4 class="list-group-item-heading">Genetic Configuration Sampling: Learning a Sampling Strategy for Fault Detection of Configurable Systems</h4>
+				<p class="list-group-item-text">Jifeng Xuan, <b>Yongfeng Gu</b>. Proceedings of the 5th International Workshop on Genetic Improvement(GI ’2018). </p>
             </a>
 			<a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Does the Fault Reside in a Stack Trace &nbsp;</h4>
-		    <p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, Tieyun Qian. Journal of Software and System (JSS ’18). Under Editor Evaluation.</p>
+                <h4 class="list-group-item-heading">Does the Fault Reside in a Stack Trace</h4>
+				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, Tieyun Qian. Journal of Software and System (JSS ’18). Major Revision.</p>
             </a>
             <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Automatic Reproducible Crash Detection&nbsp;&nbsp;</h4>
-		    <p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Tieyun Qian. Proceedings of the Annual Conference on Software Analysis, Testing and Evolution (SATE ’16). </p>
+				<h4 class="list-group-item-heading">Automatic Reproducible Crash Detection</h4>
+				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Tieyun Qian. Proceedings of the Annual Conference on Software Analysis, Testing and Evolution (SATE ’16). </p>
             </a>
 			<a href="#" class="list-group-item">
                 <h4 class="list-group-item-heading">More Interesting Works.</h4>
@@ -206,7 +209,7 @@
             </div>
 			<div class="col-sm-3 copy">
                 <h4><span class="glyphicon glyphicon-copy" aria-hidden="true"></span>&nbsp;&nbsp;Copyright</h4>
-                <p>Copyright &copy; 2016 All rights reserved. This page is powered by Yongfeng Gu, latest updated on <b>Apr.26th, 2018</b>.</p>
+                <p>Copyright &copy; 2016 All rights reserved. This page is powered by Yongfeng Gu, latest updated on <b>Jue.6th, 2018</b>.</p>
             </div>
             <!--<div class="col-sm-3 link">
                 <h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span>&nbsp;&nbsp;Links</h4>
@@ -219,6 +222,9 @@
 <!--extra js links-->
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+	$('body').scrollspy({ target: '#navbar-example2' });
+</script>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
