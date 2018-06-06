@@ -37,7 +37,7 @@ body{
 @media(min-width:900px){
 	.header{
 		width: 100%;
-		background:url(../img/header-bg4.jpg) no-repeat center center;
+		background:url(../img/header-bg1.jpg) no-repeat center center;
 	}
 	.header h1{
 		color:#fff;
@@ -63,7 +63,7 @@ body{
 }
 .p-logo:hover{
     opacity: 0.9;
-    border:5px solid #353535;
+    /*border:5px solid #353535;*/
 }
 .header-content abbr{
     color:#ccc;
@@ -136,25 +136,34 @@ nav .name-logo{
 	padding-bottom:10px;
 	border-bottom:1px solid #ddd;
 }
+#content div.panel-heading, a.list-group-item-info{
+	background:#8bbed8!important;
+	color:#09232b;
+	font-size:18px;
+}
 
 /*footer part*/
 .footer{
     width: 100%;
     padding-bottom: 20px;
-    background: #e6eaed;
+    background: #09232b;
 }
 .footer .row{
     margin: auto;
 }
 .footer .row p{
+	color:#fff;
     margin-bottom: 5px;
 }
 .footer .copy h4,.author h4,.share h4,.link h4{
-    color:#8fa5b0;
+    color:#8bbed8;
 }
 .footer author{
 	text-align: right;
 } 
 .footer .copy b{
     color:#ff8800;
+}
+.footer a{
+	
 }
