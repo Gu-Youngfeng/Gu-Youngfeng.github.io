@@ -16,7 +16,7 @@ body{
 	text-align:justify;
 }
 .header{
-	margin-top:30px;
+	margin-top:50px;
 }
 /*header part*/
 @media(max-width:900px){
@@ -33,11 +33,17 @@ body{
 		text-align:center;
 		font-size:12px;
 	}
+	.p-logo{
+		width: 120px;
+		height:120px;
+		margin: auto;
+		border:5px solid #fff;
+	}
 }
 @media(min-width:900px){
 	.header{
 		width: 100%;
-		background:url(../img/header-bg1.jpg) no-repeat center center;
+		background:url(../img/header-bg5.jpg) no-repeat center center;
 	}
 	.header h1{
 		color:#fff;
@@ -47,6 +53,12 @@ body{
 		text-align:left;
 		font-size:1.2em;
 	}
+	.p-logo{
+		width: 120px;
+		height:120px;
+		margin: auto;
+		border:5px solid #626973;
+	}
 }
 .header-content{
 
@@ -55,12 +67,7 @@ body{
     margin: auto;
     color:#fff;
 }
-.p-logo{
-    width: 120px;
-    height:120px;
-    margin: auto;
-    border:5px solid #435063;
-}
+
 .p-logo:hover{
     opacity: 0.9;
     /*border:5px solid #353535;*/
@@ -109,7 +116,7 @@ nav .name-logo{
     margin: auto;
 }
 #content h3 b{
-    color:#286090;
+    color:#337ab7;
 }
 #content .col-sm-6 .thumbnail{
     height:430px;
@@ -136,17 +143,25 @@ nav .name-logo{
 	padding-bottom:10px;
 	border-bottom:1px solid #ddd;
 }
-#content div.panel-heading, a.list-group-item-info{
-	background:#8bbed8!important;
-	color:#09232b;
+#content div.panel-heading, a.heading-title, a.list-group-item-info{
+	background:#626973!important;
+	color:#99cccc!important;
 	font-size:18px;
+}
+#content code{
+	color:#333!important;
+	background:#c9dcea!important;
+}
+#content .papers h4{
+	%font-weight:bold;
+	font-style:italic;
 }
 
 /*footer part*/
 .footer{
     width: 100%;
     padding-bottom: 20px;
-    background: #09232b;
+    background: #333;
 }
 .footer .row{
     margin: auto;
@@ -156,14 +171,14 @@ nav .name-logo{
     margin-bottom: 5px;
 }
 .footer .copy h4,.author h4,.share h4,.link h4{
-    color:#8bbed8;
+    color:#72b3d8;
 }
 .footer author{
 	text-align: right;
 } 
 .footer .copy b{
-    color:#ff8800;
+    color:#8bc34a;
 }
 .footer a{
-	
+	color:#fff!important;
 }
