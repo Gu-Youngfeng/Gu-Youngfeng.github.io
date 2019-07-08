@@ -8,6 +8,7 @@
 /*common part*/
 body{
 	position: relative;
+	/*font-family: Andale Mono;*/
 }
 #content p{
 	text-align:justify;
@@ -54,10 +55,10 @@ body{
 		font-size:1.2em;
 	}
 	.p-logo{
-		width: 120px;
-		height:120px;
+		width: 140px;
+		height:140px;
 		margin: auto;
-		border:5px solid #626973;
+		border:5px solid #556d79;
 	}
 }
 .header-content{
@@ -117,6 +118,9 @@ nav .name-logo{
 }
 #content h3 b{
     color:#337ab7;
+}
+#content h3{
+	font-family: Impact;
 }
 #content .col-sm-6 .thumbnail{
     height:430px;
