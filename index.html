@@ -5,7 +5,10 @@
 	<!--responsible design-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no
+	<!--share page with facebook and twitter-->
+	<meta property="og:image" content="img/p-logo.jpg" /> <!-- facebook -->
+	<meta name="twitter:image" content="img/p-logo.jpg" /><!-- twitter-->
 	<!--author,keywords,description for web SEO-->
 	<meta name="author" content="Yongfeng Gu">
 	<meta name="keywords" content="Yongfeng, Gu, yongfeng, Dr.Gu, 顾咏丰, 顾博士, 武汉大学">
@@ -13,7 +16,7 @@
 	<meta name="baidu-site-verification" content="02SqdQ6sCO">
 	<title>Dr.Gu's HOME PAGE</title>
 	<!--css links-->
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
 	<link type="text/css" rel="stylesheet" href="css/index.css">
 </head>
@@ -54,7 +57,7 @@
 			<div class="col-sm-10">
 				<h1 title="yongfeng Gu is Dr.Gu">Yongfeng Gu</h1>
 				<p>PhD candidate at School of Computer Science, Wuhan University.</p>
-				<p>Contact me at: <abbr title="school email">yongfenggu [at] whu.edu.cn</abbr>.</p>
+				<p>Contact me at: <abbr title="personal email">yongfeng_gu [at] 163.com</abbr>.</p>
 			</div>
 		</div>
 	</div>
@@ -70,7 +73,7 @@
 		In 2017, he decided to continue studies for the doctoral degree in computer software and theory, which is under the supervisor of Dr. <a target="_blank" href="http://www.jifeng-xuan.com/">Jifeng Xuan</a>.</p>
 		<p>Yongfeng's research directions include <code>crash analysis</code>, <code>mining software repository</code> and <code>system performance analysis</code>.
 		Any academic suggestions and cooperations are warmly welcomed.
-		In spare time, Yongfeng is also interested in writing blogs on <a href="https://blog.csdn.net/chikily_yongfeng">CSDN (in Chinese)</a> and contributing to <a href="https://github.com/Gu-Youngfeng">GitHub</a>. Besides, he is also addicted to foods and sports.</p>
+		In spare time, Yongfeng is also interested in writing blogs on <a href="https://blog.csdn.net/chikily_yongfeng">CSDN (chikily_yongfeng)</a> and contributing to <a href="https://github.com/Gu-Youngfeng">GitHub (Gu-Youngfeng)</a>. </p>
 	</div>
 	<div class="container research">
 		<h3 id="research"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;<b>R</b>esearch</h3>
@@ -110,13 +113,17 @@
 				<h4 class="list-group-item-heading"></h4>
 				<p class="list-group-item-text"></p>
 			</a>
+			<!--<a href="javascript:void(0)" class="list-group-item" title="This paper is being revised">
+				<h4 class="list-group-item-heading">Multi-objective Configuration Sampling for Performance Ranking in Configurable Systems&nbsp;&nbsp;</h4>
+				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Yuntianyi Chen, Xiangyang Jia, Jifeng Xuan. In Proceedings of the 26th Asia-Pacific Software Engineering Conference (APSEC '19, accepted).</p>
+			</a>-->
 			<a href="javascript:void(0)" class="list-group-item" title="This paper is being revised">
 				<h4 class="list-group-item-heading">软件崩溃研究进展&nbsp;&nbsp;</h4>
-				<p class="list-group-item-text"><b>顾咏丰</b>, 马萍, 贾向阳, 江贺, 玄跻峰. 中国科学:信息科学 (SCIENTIA SINICA Informationis '19, minor revision).</p>
+				<p class="list-group-item-text"><b>顾咏丰</b>, 马萍, 贾向阳, 江贺, 玄跻峰. 中国科学:信息科学 (SCIENTIA SINICA Informationis '19, to appear).</p>
 			</a>
 			<a href="paper/2019_JSS_Does.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">Does the Fault Reside in a Stack Trace?&nbsp;&nbsp;</h4>
-				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, Tieyun Qian. Journal of Systems and Software (JSS '19, to appear).</p>
+				<h4 class="list-group-item-heading">Does the Fault Reside in a Stack Trace? Assisting crash localization by predicting crashing fault residence&nbsp;&nbsp;</h4>
+				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, Tieyun Qian. Journal of Systems and Software (JSS '19).</p>
 			</a>
 			<a href="paper/2018_ICSME_How.pdf" class="list-group-item">
 				<h4 class="list-group-item-heading">How do Multiple Pull Requests Change the same Code: A Study of Competing Pull Requests on GitHub.</h4>
@@ -173,11 +180,10 @@
 		<div class="row">
 			<div class="col-sm-5 author">
 				<h4><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Contact</h4>
-				<p>Dr.Gu (Yongfeng Gu)</p>
 				<p>No. 9, Bayi Road, Wuchang District, Wuhan city, Hubei, China</p>
 				<p>School of Computer Science, Wuhan University (430072).</p>
 				<!--<p><abbr title="telephone">Tel</abbr>:(+86)18062684923</p>-->
-				<p>E-mail: <a href="mailto:#">yongfenggu@whu.edu.cn</a></p>
+				<p>E-mail: <a href="mailto:#">yongfeng_gu@163.com</a></p>
 				<!--<p><a href="mailto:#">yongfeng_gu@163.com</a></p>-->
 				
 			</div>
@@ -185,13 +191,24 @@
 			<div class="col-sm-4 share">
 				<h4><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;&nbsp;Share</h4>
 				<p>Thanks for paying attention to me and I'd appreciate it if you could sharing this page to the following areas.</p>
-				<p><a href="#">The share function is closed temporarily :( </a></p>
+				<!--<p><a href="#">The share function is closed temporarily :( </a></p>-->
 				<!--<div class="bdsharebuttonbox"><a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
 				<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>-->
+				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+				<div class="bshare-custom">
+					<a title="QQ Zone" class="bshare-qzone icon-medium"></a>
+					<a title="Sina Weibo" class="bshare-sinaminiblog"></a>
+					<a title="Renren" class="bshare-renren"></a>
+					<a title="Tencent Weibo" class="bshare-qqmb"></a>
+					<!--<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>-->
+					<span class="BSHARE_COUNT bshare-share-count">0</span>
+				</div>
+
 			</div>
 			<div class="col-sm-3 copy">
 				<h4><span class="glyphicon glyphicon-copy" aria-hidden="true"></span>&nbsp;&nbsp;Copyright</h4>
-				<p>Copyright &copy; 2016 All rights reserved. This page is powered by Yongfeng Gu, latest updated on <b>July 8th, 2019</b>.</p>
+				<p>Copyright &copy; 2016 All rights are reserved. This page is powered by Yongfeng Gu, latest updated on <b>August 13th, 2019</b>.</p>
 			</div>
 			<!--<div class="col-sm-3 link">
 				<h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span>&nbsp;&nbsp;Links</h4>
@@ -219,7 +236,7 @@
 				<h4>Yongfeng Gu (Dr.Gu)</h4>
 				<p>No. 9, Bayi Road, Wuchang District, Wuhan city, Hubei, China</p>
 				<p>School of Computer Science, Wuhan University (430072).</p>
-				<p>E-mail: <a href="mailto:#">yongfenggu@whu.edu.cn</a></p>
+				<p>E-mail: <a href="mailto:#">yongfeng_gu@163.com</a></p>
 				<!--<p><a href="mailto:#">yongfeng_gu@163.com</a></p>-->
 				<!--<p>Tel:(+86)18062684923</p>-->
 			</div>
