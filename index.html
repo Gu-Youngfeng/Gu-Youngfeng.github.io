@@ -1,254 +1,163 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-	<meta charset="UTF-8">
-	<!--responsible design-->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="renderer" content="webkit">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no
-	<!--share page with facebook and twitter-->
-	<meta property="og:image" content="img/p-logo.jpg" /> <!-- facebook -->
-	<meta name="twitter:image" content="img/p-logo.jpg" /><!-- twitter-->
-	<!--author,keywords,description for web SEO-->
+<head>
+	<meta charset="utf-8">
+	<title>Yongfeng Gu</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--Author, keywords, and description-->
 	<meta name="author" content="Yongfeng Gu">
 	<meta name="keywords" content="Yongfeng, Gu, yongfeng, Dr.Gu, 顾咏丰, 顾博士, 武汉大学">
 	<meta name="description" content="Yongfeng Gu is a phd candidate in School of Computer Science, Wuhan University. His current research direction is Crash Analysis, and he is also interested in Mining Software Repository and System Performance Analysis.">
-	<meta name="baidu-site-verification" content="02SqdQ6sCO">
-	<title>Dr.Gu's HOME PAGE</title>
-	<!--css links-->
+    <!--Page icon-->
 	<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-	<link type="text/css" rel="stylesheet" href="css/index.css">
+	<!--CSS styles-->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/jQueryBike.css"/>
 </head>
-<body data-spy="scroll" data-target="#navbar-example2" data-offset="0">
-<!--nav starts-->
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-example2">
-	<div class="container">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand name-logo" href="#"></a>
-		</div>
-		<!-- Collect the nav links-->
-		<div class="collapse navbar-collapse" id="navbar">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-				<li><a href="#biography">Biography</a></li>
-				<li><a href="#research">Research</a></li>
-				<li><a href="#papers">Publication</a></li>
-				<li><a href="#life">Awards</a></li>
-				<li><a href="#" data-toggle="modal" data-target="#myModal">Contact me</a></li>
-			</ul>
-		</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
-</nav>
-<!--header starts-->
-<div class="header">
-	<div class="header-content container">
+<body>
+	<!--Main wrapper-->
+	<div class="container border main-page">
 		<div class="row">
-			<div class="col-sm-2">
-				<img src="img/p-logo.jpg" class="img-responsive img-circle p-logo" title="Yongfeng Gu">
-			</div>
-			<div class="col-sm-10">
-				<h1 title="yongfeng Gu is Dr.Gu">Yongfeng Gu</h1>
-				<p>PhD candidate at School of Computer Science, Wuhan University.</p>
-				<p>Contact me at: <abbr title="personal email">yongfeng_gu [at] 163.com</abbr>.</p>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!--content starts-->
-<div id="content">
-	<div class="container biography">
-		<h3 id="biography"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<b>B</b>iography</h3>
-		<p>Yongfeng Gu is currently a Ph.D. candidate at the <a target="_blank"  href="http://cs.whu.edu.cn/">School of Computer Science</a>, Wuhan University. 
-		Early on, he received his bachelor degree at <a href="http://csi.hubu.edu.cn/" target="_blank">School of Computer & Information Engineering</a>, Hubei University, in 2015. 
-		Then in the summer of 2015, he was admitted to <a target="_blank" href="http://www.whu.edu.cn/">Wuhan University</a> to continue his studies for the master degree. 
-		In 2017, he decided to continue studies for the doctoral degree in computer software and theory, which is under the supervisor of Dr. <a target="_blank" href="http://www.jifeng-xuan.com/">Jifeng Xuan</a>.</p>
-		<p>Yongfeng's research directions include <code>crash analysis</code>, <code>mining software repository</code> and <code>system performance analysis</code>.
-		Any academic suggestions and cooperations are warmly welcomed.
-		In spare time, Yongfeng is also interested in writing blogs on <a href="https://blog.csdn.net/chikily_yongfeng">CSDN (chikily_yongfeng)</a> and contributing to <a href="https://github.com/Gu-Youngfeng">GitHub (Gu-Youngfeng)</a>. </p>
-	</div>
-	<div class="container research">
-		<h3 id="research"><span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;<b>R</b>esearch</h3>
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>1. Crash Analysis</h4>
-				<p class="text-primary"><b>Crash Analysis</b>, which includes the analysis of crash reporting system, crash reproduction, crash localization, crash repairing, and related empirical studies, is a vital process in software debugging and maintenance.</p>
-				<p>According to empirical studies, developers need to spend much than 45% efforts on debugging work in the whole development. Hence, the question "How to reproduce, location, and fix crashes effectively and efficiently?" has drawn continuous attention from researchers.</p>
-				<!--<p>
-					<a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-				</p>-->
-			</div>
-			<div class="col-sm-4">
-				<h4>2. System Performance Analysis</h4>
-				<p class="text-primary"><b>System Performance Analysis</b> focuses on solving the problems of predicting configuration performance, finding the optimal configurations and figuring out the invalid configurations in software or systems.</p>
-				<p>The large space of configurable systems and expensive cost on configuration measurements make it difficult for performance analysis works.
-				<!--"How to make the trade-off between accuracy and cost?" is still an open question in configuration analysis area. </p>-->
-				Many methods are proposed to attempt to deeply explore the configurations with their performance behaviors.</p>
-				<!--<p>
-					<a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-				</p>-->
-			</div>
-			<div class="col-sm-4">
-				<h4>3. Mining Software Repository</h4>
-				<p class="text-primary"><b>Mining Software Repository</b> (MSR) aims to extract some interesting or potential patterns or information from the rich data in software repositories, such as version control systems, bug tracking systems, QA systems, etc.</p>
-				<p>The analysis strategies and mining algorithms in this domain are borrowed from the area of statistical analysis and data mining. The study topics are various, ranging from developers' behaviors analysis, duplicate bug reports detection and just-in-time defects prediction.</p>
-				<!--<p>
-					<a href="#" class="btn btn-primary" role="button">View Detail &gt;&gt;</a>
-				</p>-->
-			</div>			
-		</div>
-	</div>
-	<div class="container papers">
-		<h3 id="papers"><span class="glyphicon glyphicon-duplicate"></span>&nbsp;&nbsp;<b>P</b>ublications</h3>
-		<div class="list-group">
-			<a href="javascript:void(0)" class="list-group-item list-group-item-info heading-title">
-				<h4 class="list-group-item-heading"></h4>
-				<p class="list-group-item-text"></p>
-			</a>
-			<a href="paper/2019_SATE_Regression.pdf" class="list-group-item" title="This paper is being revised">
-				<h4 class="list-group-item-heading">Regression Models for Performance Ranking of Configurable Systems: A Comparative Study&nbsp;&nbsp;</h4>
-				<p class="list-group-item-text">Yuntianyi Chen, <b>Yongfeng Gu</b>, Lulu He, Jifeng Xuan. In Proceedings of the Annual Conference on Software Analysis, Testing and Evolution (SATE '19).</p>
-			</a>
-			<a href="paper/2019_APSEC_MultiObjective.pdf" class="list-group-item" title="This paper is being revised">
-				<h4 class="list-group-item-heading">Multi-objective Configuration Sampling for Performance Ranking in Configurable Systems&nbsp;&nbsp;</h4>
-				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Yuntianyi Chen, Xiangyang Jia, Jifeng Xuan. In Proceedings of the 26th Asia-Pacific Software Engineering Conference (APSEC '19).</p>
-			</a>
-			<a href="paper/2019_SSI_Progress.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">Progress on Software Crash Research&nbsp;&nbsp;(in Chinese)</h4>
-				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Ping Ma, Xiangyang Jia, He Jiang, Jifeng Xuan. SCIENTIA SINICA Informationis. 2019.</p>
-			</a>
-			<a href="paper/2019_JSS_Does.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">Does the Fault Reside in a Stack Trace? Assisting crash localization by predicting crashing fault residence&nbsp;&nbsp;</h4>
-				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, Tieyun Qian. Journal of Systems and Software. 2019.</p>
-			</a>
-			<a href="paper/2018_ICSME_How.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">How do Multiple Pull Requests Change the same Code: A Study of Competing Pull Requests on GitHub.</h4>
-				<p class="list-group-item-text">Xin Zhang, Yang Chen, <b>Yongfeng Gu</b>, Jifeng Xuan. In Proceedings of the 34th IEEE International Conference on Software Maintenance and Evolution (ICSME '18). </p>
-			</a>
-			<a href="paper/2018_GI_Genetic.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">Genetic Configuration Sampling: Learning a Sampling Strategy for Fault Detection of Configurable Systems.</h4>
-				<p class="list-group-item-text">Jifeng Xuan, <b>Yongfeng Gu</b>, Zhilei Ren, Xiangyang Jia, Qingna Fan. In Proceedings of the 5th International Workshop on Genetic Improvement (GI@GECCO '18). </p>
-			</a>
-			<a href="paper/2016_SATE_Automatic.pdf" class="list-group-item">
-				<h4 class="list-group-item-heading">Automatic Reproducible Crash Detection.</h4>
-				<p class="list-group-item-text"><b>Yongfeng Gu</b>, Jifeng Xuan, Tieyun Qian. In Proceedings of the Annual Conference on Software Analysis, Testing and Evolution (SATE '16). </p>
-			</a>
-			<a href="javascript:void(0)" class="list-group-item">
-				<h4 class="list-group-item-heading">More Interesting Works.</h4>
-				<p class="list-group-item-text"></p>
-			</a>
-		</div>
-		
-	</div>
-	<div class="container awards">
-		<h3 id="papers"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;<b>A</b>wards</h3>
-		<div class="panel panel-info">
-			<div class="panel-heading"></div>
-			<ul class="list-group">
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/whu.jpg">First-Class Award in doctoral forum in School of Computer Science, <b>Wuhan University</b>.&nbsp;&nbsp;<small>2019</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/whu.jpg">Second-Class Scholarship in Academic, <b>Wuhan University</b>.&nbsp;&nbsp;<small>2018</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/njsd.jpg">Second-Class Award in MoocTest Cup Developers' Testing Invitational tournament, <b>NJSD 2017</b>.&nbsp;&nbsp;<small>2017</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/ccf.jpg">Third-Class Award in software prototype competition, <b>NASAC 2016</b>.&nbsp;&nbsp;<small>2016</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/sklse.jpg">Second-Class Award in SKLSE Cup website design competition, <b>State Key Lab of Software Engineering</b>.&nbsp;&nbsp;<small>2016</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/whu.jpg">First-Class Scholarship in Academic, <b>Wuhan University</b>.&nbsp;&nbsp;<small>2015, 2016</small></p>
-				</li>
-				<li href="#" class="list-group-item">
-					<p class="list-group-item-text"><img class="lgih-img" src="img/hu.jpg">National Encouragement Scholarship, <b>Hubei University</b>.&nbsp;&nbsp;<small>2012</small></p>
-				</li>
-	   		</ul>
-		</div>
-	</div>
-</div>
-<!--footer starts-->
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-5 author">
-				<h4><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Contact</h4>
-				<p>No. 9, Bayi Road, Wuchang District, Wuhan city, Hubei, China</p>
-				<p>School of Computer Science, Wuhan University (430072).</p>
-				<!--<p><abbr title="telephone">Tel</abbr>:(+86)18062684923</p>-->
-				<p>E-mail: <a href="mailto:#">yongfeng_gu@163.com</a></p>
-				<!--<p><a href="mailto:#">yongfeng_gu@163.com</a></p>-->
-				
-			</div>
-
-			<div class="col-sm-4 share">
-				<h4><span class="glyphicon glyphicon-share" aria-hidden="true"></span>&nbsp;&nbsp;Share</h4>
-				<p>Thanks for paying attention to me and I'd appreciate it if you could sharing this page to the following areas.</p>
-				<!--<p><a href="#">The share function is closed temporarily :( </a></p>-->
-				<!--<div class="bdsharebuttonbox"><a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
-				<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>-->
-				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
-				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
-				<div class="bshare-custom">
-					<a title="QQ Zone" class="bshare-qzone icon-medium"></a>
-					<a title="Sina Weibo" class="bshare-sinaminiblog"></a>
-					<a title="Renren" class="bshare-renren"></a>
-					<a title="Tencent Weibo" class="bshare-qqmb"></a>
-					<!--<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>-->
-					<span class="BSHARE_COUNT bshare-share-count">0</span>
+			<!--Left part-->
+			<div class="col-sm-3 sidebar">
+				<div class="sidebar-content">
+					<div class="person-image">
+						<img src="img/gu.png"></img>
+					</div>
+					<div class="person-info">
+						<div class="writing-sect"></div>
+						<p>Phd candidate</p>
+						<p class="yyellow">School of Computer Science,<br>Wuhan University</p>
+						<p><abbr title="Personal E-mail">yongfenggu@whu.edu.cn</abbr></p>
+					</div>
+					<div class="person-bike">
+						
+						<div class="bike bikeAni" data-container="body" data-toggle="popover" data-placement="top" data-content="2020, keep moving!"></div>
+					</div>
+					<div class="person-footer">
+						<p>This page is powered by <em>Yongfeng Gu</em></p>
+						<p>Updated on <span class="footer">January 31, 2020</span>.</p>
+					</div>
 				</div>
-
 			</div>
-			<div class="col-sm-3 copy">
-				<h4><span class="glyphicon glyphicon-copy" aria-hidden="true"></span>&nbsp;&nbsp;Copyright</h4>
-				<p>Copyright &copy; 2016 All rights are reserved. This page is powered by Yongfeng Gu, latest updated on <b>August 13th, 2019</b>.</p>
+			<!--Right part-->
+			<div class="col-sm-9 content">
+				<!--biography-->
+				<div class="biography-sect">
+					<h6><img src="img/user.svg" class="section-icon">Biography</h6>
+					<p> I'm <em>Yongfeng Gu</em>, a third-grade doctoral candidate at the School of Computer Science, Wuhan University, China.
+						I'm also a member of CSTAR - Centre of Software Testing, Analysis, and Reliabiity.
+						I major in computer software and theory, which is under the supervision of Prof. Dr. <a href="http://www.jifeng-xuan.com/" target="_blank"><em>Jifeng Xuan</em></a>. 
+						My research directions include software crash analysis, and system performance analysis. 
+						Besides, I have updated blogs on CSDN (<a href="https://blog.csdn.net/chikily_yongfeng" target="_blank"><em>chikily_yongfeng</em></a>) and contributed to GitHub (<a href="https://github.com/Gu-Youngfeng" target="_blank"><em>Gu-Youngfeng</em></a>) for years.
+						Any kind suggestions and cooperation are warmly welcomed. 
+					</p>
+				</div>
+				<!--projects-->
+				<div class="projects-sect">
+					<h6><img src="img/list.svg" class="section-icon">Projects</h6>
+					<p class="subtitle">1. Software Crash Analysis</p>
+					<p> Software crash refers to an unexpected termination of software systems. 
+						Developers spend much time and effort in dealing with software crashes. 
+						In this project, we mainly focus on crash reproduction, localization, repair, and other relative tasks. </p>
+					<ul class="paper">
+						<li class="">
+							<u>Yongfeng Gu</u>, Ping Ma, Xiangyang Jia, He Jiang, and Jifeng Xuan. 
+							<strong><em>Progress on software crash research.</em></strong> 
+							SCIENTIA SINICA Informationis, 2019, 49(11): 1383-1398  [<a target="_blank" href="http://engine.scichina.com/publisher/scp/journal/SSI/49/11/10.1360/N112019-00018?slug=fulltext">Link</a>]
+							<span class="badge badge-danger">New</span>
+						</li>
+						<li class="">
+							<u>Yongfeng Gu</u>, Jifeng Xuan, Hongyu Zhang, Lanxin Zhang, Qingna Fan, Xiaoyuan Xie, and Tieyun Qian. 
+							<strong><em>Does the fault reside in a stack trace? Assisting crash localization by predicting crashing fault residence.</em></strong> 
+							Journal of Systems and Software, 2019, 148(1): 88-104 [<a target="_blank" href="https://www.sciencedirect.com/science/article/pii/S0164121218302401">Link</a>]
+						</li>
+						<li class="">
+							<u>Yongfeng Gu</u>, Jifeng Xuan, and Tieyun Qian.
+							<strong><em>Automatic reproducible crash detection.</em></strong> 
+							International Conference on Software Analysis, Testing and Evolution. (SATE 2016) [<a target="_blank" href="https://ieeexplore.ieee.org/document/7780193">Link</a>]
+						</li>
+					</ul>
+					<p class="subtitle">2. System Performance Analysis</p>
+					<p> Modern software systems often provide tons of configuration options to extend flexibility and functionality.
+						However, the daily-increasing number of options bring the challenges in two vital tasks: configuration-related
+						bug detection and system performance optimization. In this project, we tried to explore solutions to solve or
+						assist the above tasks. </p>
+					<ul class="paper">
+						<li>
+							<u>Yongfeng Gu</u>, Yuntianyi Chen, Xiangyang Jia, and Jifeng Xuan.
+							<strong><em>Multi-Objective Configuration Sampling for Performance Ranking in Configurable Systems.</em></strong>
+							Asian-Pasific Software Engineering Conference. (APSEC 2019) [<a target="_blank" href="https://ieeexplore.ieee.org/document/8945705">Link</a>]
+						</li>
+						<li>
+							Yuntianyi Chen, <u>Yongfeng Gu</u>, Lulu He, and Jifeng Xuan.
+							<strong><em>Regression Models for Performance Ranking of Configurable Systems: A Comparative Study.</em></strong>
+							International Workshop on SOFL + MSVL for Reliability and Security. (SOFL+MSVL 2019) [to appear]
+						</li>
+						<li>
+							Jifeng Xuan, <u>Yongfeng Gu</u>, Zhilei Ren, Xiangyang Jia, and Qingna Fan.
+							<strong></em>Genetic Configuration Sampling: Learning a Sampling Strategy for Fault Detection of Configurable Systems.</em></strong>
+							Genetic and Evolutionary Computation Conference Companion. (GECCO@GI 2018) [<a target="_blank" href="https://dl.acm.org/doi/abs/10.1145/3205651.3208267">Link</a>]
+						</li>
+					</ul>
+				</div>
+				<!--award-->
+				<div class="awards-sect">
+					<h6><img src="img/award.svg" class="section-icon">Awards</h4>
+					<ul class="paper">
+						<li>
+							<span class="award-tag">Famous Teacher Scholarship in Wuhan University 2019.</span>
+						</li>
+						<li>
+							Distinguished Doctor Forum in Annual Symposium of Wuhan Computer Software Engineering Federation <br>
+							<span class="award-tag">Nomination Award in 2019.</span>
+						</li>
+						<li>
+							Distinguished Doctor Forum in School of Computer Science, Wuhan University<br>
+							<span class="award-tag">First-class Award in 2018. Third-class Award in 2019.</span>
+						</li>
+						<li>
+							Academic Scholarship, Wuhan University<br>
+							<span class="award-tag">First-class Award in 2015, 2016. Second-class Award in 2018, 2019.</span>
+						</li>
+						<li>
+							SKLSE Cup Website Design Competition, Wuhan University<br>
+							<span class="award-tag">Second-class Award in 2016.</span>
+						</li>
+						<li>
+							Software Prototype Competition, NASAC 2016<br>
+							<span class="award-tag">Third-class Award in 2016.</span>
+						</li>
+						<li>
+							MoocTest Cup Developers Testing Invitational Tournament, NJSD 2017<br>
+							<span class="award-tag">Second-class Award in 2016.</span>
+						</li>
+						<li>
+							<span class="award-tag">National Encouragement Scholarship in Hubei University 2012.</span>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<!--<div class="col-sm-3 link">
-				<h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span>&nbsp;&nbsp;Links</h4>
-				<p><a target="_blank" href="http://sklse.whu.edu.cn/">Organization: SKLSE</a></p>
-				<p><a target="_blank" href="http://researchers.lille.inria.fr/~xuan/">Supervisor: Jifeng Xuan</a></p>
-			</div>-->
 		</div>
 	</div>
-</footer>
-<!--extra js links-->
-<script src="js/jquery-1.11.3.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script>
-	$('body').scrollspy({ target: '#navbar-example2' });
-</script>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Contact Me</h4>
-			</div>
-			<div class="modal-body">
-				<h4>Yongfeng Gu (Dr.Gu)</h4>
-				<p>No. 9, Bayi Road, Wuchang District, Wuhan city, Hubei, China</p>
-				<p>School of Computer Science, Wuhan University (430072).</p>
-				<p>E-mail: <a href="mailto:#">yongfeng_gu@163.com</a></p>
-				<!--<p><a href="mailto:#">yongfeng_gu@163.com</a></p>-->
-				<!--<p>Tel:(+86)18062684923</p>-->
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
-			</div>
-		</div>
-	</div>
-</div>
+	<!--JS scripts-->
+	<script src="js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// activate the bike plugin
+			$(function () {
+				$('[data-toggle="popover"]').popover()
+			})
+			// print on the console
+			var mydate = new Date();
+			var time_str = mydate.toLocaleString(); 
+			console.info("%cHi, bro, welcome to my site!","color:green");
+			console.info("--------\nI'm Yongfeng Gu and I'm a currently a phd candidate at the school of computer science, Wuhan University, China. Contect me at yongfenggu@whu.edu.cn.");		
+			console.info("--------\nVisit on: "+time_str);
+		});
+	</script>
 </body>
 </html>
