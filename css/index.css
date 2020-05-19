@@ -53,12 +53,12 @@ a:hover{
 	margin-right:4px;
 }
 
-.biography-sect, .projects-sect{
+.biography-sect, .projects-sect, .attach-sect{
 	border-bottom:1px solid #dee2e6;
 	margin-bottom:10px;
 }
 
-.biography-sect h6, .projects-sect h6, .awards-sect h6{
+.biography-sect h6, .projects-sect h6, .awards-sect h6, .attach-sect h6{
 	color:#009faa;
 	
 }
