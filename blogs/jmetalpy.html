@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-
-<title>jMetalPy</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Blog - jMetalPy</title>
+<meta name="keywords" content="jmetalpy, jmetal, multi-objective optimization, genetic algorithm, python,">
+<meta name="description" content="jMetalPy is a very nice toolkit providing commonly-used Evolutionary Algorithms (EAs) to solve the multi-objective or single-objective optimization problems. By using jMetalPy, one can easily implement the Greedy Search, Simulated Annealing, NSGA-II, IBEA, and SPEA2 algorithms for your own optimization problems.">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13016,7 +13019,7 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
-</style>
+    </style>
 
 
 <style type="text/css">
@@ -13046,9 +13049,778 @@ div#notebook {
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
-<link rel="stylesheet" href="custom.css">
+<!--<link rel="stylesheet" href="custom.css">-->
 
 <!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered " style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px">JMetalPy: An evolutionary algorithm framework for solving the optimization problems</p>
+<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h2 id="0.-Basic-Introduction">0. Basic Introduction<a class="anchor-link" href="#0.-Basic-Introduction">&#182;</a></h2><p><a href="https://jmetal.github.io/jMetalPy/index.html"><strong><em>jMetalPy</em></strong></a> is a very nice toolkit providing commonly-used Evolutionary Algorithms (EAs) to solve the multi-objective or single-objective optimization problems. By using jMetalPy, one can easily implement the Greedy Search, Simulated Annealing, NSGA-II, IBEA, and SPEA2 algorithms for your own optimization problems. To give an intuitive impression of Evolutionary algorithm, I concluded a brief algorithm framework in jMetalPy is as follows (Step A, B, and C).</p>
+<p><img src="blog_imgs/GAFramwework.png" width=750></p>
+<p>Technically, jMetalPy is a Python version of the jMetal framework, it's widely used and already integrated into the PYPI (which means you can easily install jMetalPy by typing command like <code>pip install jmetalpy</code>). Here are some related documentations,</p>
+<ul>
+<li>Pypi: <a href="https://pypi.org/project/jmetalpy/">https://pypi.org/project/jmetalpy/</a>  </li>
+<li>Homepage: <a href="https://jmetal.github.io/jMetalPy/index.html">https://jmetal.github.io/jMetalPy/index.html</a></li>
+<li>Github: <a href="https://github.com/jMetal/jMetalPy">https://github.com/jMetal/jMetalPy</a></li>
+<li>Documentation (out-of-date): <a href="https://readthedocs.org/projects/jmetalpy/downloads/pdf/stable/">https://readthedocs.org/projects/jmetalpy/downloads/pdf/stable/</a></li>
+<li>Publication: <a href="https://arxiv.org/pdf/1903.02915.pdf">https://arxiv.org/pdf/1903.02915.pdf</a></li>
+</ul>
+<p>However, the current documentation or tutorial online are either under construction or out of date, there seems to be no complete tutorial about the jMetalPy which makes it hard for beginners (like me) to master this toolkit. This is the main reason why I write this brief daily blog.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Single-objective-Optimization">1. Single-objective Optimization<a class="anchor-link" href="#1.-Single-objective-Optimization">&#182;</a></h2><h3 id="1.1-Problem">1.1 Problem<a class="anchor-link" href="#1.1-Problem">&#182;</a></h3><p><strong>Knapsack Problem:</strong> The Knapsack Problem [1] is a problem in combinatorial optimization: Suppose that we have $n$ items, each with a weight ($w_i$) and a value ($v_i$), we try to select a subset ($T \subsetneqq \{0,1,2...,n\}$) of this items so that the total weight is less than or equal to a given limit ($W &gt; 0$) and the total value is as large as possible.</p>
+$$
+\mbox{Knapsack:} \ \ \ maximize \ \sum_{i \in T}v_i \ \ \ s.t., \sum_{i \in T}w_i \leq W
+$$<p>To make problem easier to understand, we set $m=5$, $w = \{2,2,6,5,4\}$, $v = \{6,3,5,4,6\}$, and $W=10$.</p>
+<p><strong>Genetic Algorithm:</strong> The Genetic Algorithm [2] is a search heuristic that is inspired by Charles Darwin's theory of natural evolution. This algorithm reflects the process of natural selection where the fittest individuals are selected for reproduction in order to produce offspring of the next generation</p>
+<p><strong>[1]</strong> Liu. "Using Dynamic Programming to Solve the Knapsack Problem." <a href="https://zhuanlan.zhihu.com/p/30959069">Online Access</a>.<br> <strong>[2]</strong> Tutorialspoint Team. "Introduction to Genetic Algorithm." <a href="https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_introduction.htm">Online Access</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="1.2-Implementation">1.2 Implementation<a class="anchor-link" href="#1.2-Implementation">&#182;</a></h3><p><strong>STEP-1:</strong> We first define the problem (<strong>Knapsack</strong>) we want to solve and the algorithm (<strong>GeneticAlgorithm</strong>) we expect to use. In this step, we need to set the basic hyper-parameters includes crossover and mutation operators, population size, and termination criterion.</p>
+<p style="color:#0000ff">:) The Knapsack problem is already defined in the jMetalPy library, we only need to call it.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.problem.singleobjective.knapsack</span> <span class="k">import</span> <span class="n">Knapsack</span>
+<span class="kn">from</span> <span class="nn">jmetal.algorithm.singleobjective</span> <span class="k">import</span> <span class="n">GeneticAlgorithm</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.termination_criterion</span> <span class="k">import</span> <span class="n">StoppingByEvaluations</span>
+<span class="kn">from</span> <span class="nn">jmetal.operator</span> <span class="k">import</span> <span class="n">SPXCrossover</span><span class="p">,</span> <span class="n">BitFlipMutation</span>
+<span class="kn">from</span> <span class="nn">jmetal.operator.selection</span> <span class="k">import</span> <span class="n">RouletteWheelSelection</span><span class="p">,</span> <span class="n">BinaryTournamentSelection</span><span class="p">,</span> <span class="n">BestSolutionSelection</span>
+
+<span class="n">kp_problem</span> <span class="o">=</span> <span class="n">Knapsack</span><span class="p">(</span>  <span class="c1"># define the Knapsack problem</span>
+    <span class="n">number_of_items</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">capacity</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+    <span class="n">profits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+<span class="p">)</span>  
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">GeneticAlgorithm</span><span class="p">(</span>  <span class="c1"># initialize the algorithm</span>
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">kp_problem</span><span class="p">,</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">offspring_population_size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">mutation</span> <span class="o">=</span> <span class="n">BitFlipMutation</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">kp_problem</span><span class="o">.</span><span class="n">number_of_variables</span><span class="p">),</span>
+    <span class="n">crossover</span> <span class="o">=</span> <span class="n">SPXCrossover</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="mf">0.8</span><span class="p">),</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">BestSolutionSelection</span><span class="p">(),</span>
+    <span class="n">termination_criterion</span> <span class="o">=</span> <span class="n">StoppingByEvaluations</span><span class="p">(</span><span class="n">max_evaluations</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>STEP-2:</strong> We run our algorithm algorithm and get the result.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.util.solution</span> <span class="k">import</span> <span class="n">get_non_dominated_solutions</span>
+<span class="kn">from</span> <span class="nn">jmetal.lab.visualization</span> <span class="k">import</span> <span class="n">Plot</span>
+
+<span class="c1"># run and get results</span>
+<span class="n">algorithm</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solution:&#39;</span><span class="p">,</span><span class="n">solution</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="s1">&#39;Maximum value:&#39;</span><span class="p">,</span><span class="n">solution</span><span class="o">.</span><span class="n">objectives</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Solution: [[True, True, False, False, True]] Maximum value: -15.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p style="color:#0000ff">:) Actually, people tend to use the <b>Dynamic Programming</b> algorithm to solve the 0/1 Knapsack Problem. Here I also provide a simple example of the Dynamic Programming algorithm. The maximum value is <b>15</b>, which is consistent with the result of the Genetic Algorithm.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">solve_knapsack</span><span class="p">(</span><span class="n">num_items</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">profits</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    solve the Knapsack problem using the dynamic programming algorithm</span>
+<span class="sd">    ------------------</span>
+<span class="sd">    :num_items : number of items</span>
+<span class="sd">    :weights   : weight list for all items</span>
+<span class="sd">    :profits   : value list for all items</span>
+<span class="sd">    :W         : weight limit</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">weights</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">profits</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># construct table</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_items</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_items</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">W</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">profits</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        
+    <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">num_items</span><span class="p">][</span><span class="n">W</span><span class="p">]</span>
+    
+<span class="n">solution</span> <span class="o">=</span> <span class="n">solve_knapsack</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum value:&#39;</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum value: 15
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Multi-objective-Optimization">2. Multi-objective Optimization<a class="anchor-link" href="#2.-Multi-objective-Optimization">&#182;</a></h2><h3 id="2.1-Problem">2.1 Problem<a class="anchor-link" href="#2.1-Problem">&#182;</a></h3><p><strong>ZDT1 Problem:</strong> ZDT1 is a typical optimization problem from paper [1] and also a suitable example for introducing jMetalPy. Suppose that we have $m$ decision variables ($x_i$) to minimize two objective functions, i.e., $f_1$ and $f_2$. Each of $x_i$ should be in the range of [0,1]. ZDT1 problem can be summarized as follows,</p>
+$$
+\mbox{ZDT1:} \ \
+\begin{cases}
+minimize \ f_1 = x_1 \\
+minimize \ f_2 = 1-\sqrt{f_1/g}, \ \ \ g = 1+\frac{9}{(m-1)}\sum_{i=2}^mx_i 
+\end{cases} 
+\ \ \ s.t., \ 0 \leq x_i \leq 1
+$$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective optimization algorithm introduced by [2]. In each selection, NSGA-II updates the population with a fast non-dominate sorting algorithm and crowding distance selection strategy.</p>
+<p><strong>[1]</strong>: E. Zitzler, K. Deb, and L. Thiele. "Comparison of Multiobjective Evolutionary Algorithms: Empirical Results". IEEE Transactions on Evolutionary Computation 8(2):173 - 195, 2000. 
+<strong>[2]</strong>: K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan. "A fast and elitist multiobjective genetic algorithm: NSGA-II". IEEE Transactions on Evolutionary Computation 6(2):182 - 197, 2002</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.2-Implementation">2.2 Implementation<a class="anchor-link" href="#2.2-Implementation">&#182;</a></h3><p><strong>STEP-1:</strong> We first define the problem (<code>ZDT1</code>) we want to solve and the algorithm (<code>NSGAII</code>) we expect to use. In this step, we need to set the basic hyper-parameters includes crossover and mutation operators, population size, and termination criterion.</p>
+<p style="color:#0000ff;">:) NSGA-II has its own default selection mode, we no longer redefine it in the program.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.algorithm.multiobjective</span> <span class="k">import</span> <span class="n">NSGAII</span>
+<span class="kn">from</span> <span class="nn">jmetal.operator</span> <span class="k">import</span> <span class="n">SBXCrossover</span><span class="p">,</span> <span class="n">PolynomialMutation</span><span class="p">,</span> <span class="n">BinaryTournamentSelection</span>
+<span class="kn">from</span> <span class="nn">jmetal.problem</span> <span class="k">import</span> <span class="n">ZDT1</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.termination_criterion</span> <span class="k">import</span> <span class="n">StoppingByEvaluations</span>
+
+<span class="n">zdt1_problem</span> <span class="o">=</span> <span class="n">ZDT1</span><span class="p">()</span>  <span class="c1"># define the ZDT1 problem</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">NSGAII</span><span class="p">(</span>  <span class="c1"># initialize the algorithm</span>
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">zdt1_problem</span><span class="p">,</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">offspring_population_size</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>   
+    <span class="n">mutation</span> <span class="o">=</span> <span class="n">PolynomialMutation</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">zdt1_problem</span><span class="o">.</span><span class="n">number_of_variables</span><span class="p">,</span> <span class="n">distribution_index</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">crossover</span> <span class="o">=</span> <span class="n">SBXCrossover</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">distribution_index</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>  
+    <span class="n">termination_criterion</span> <span class="o">=</span> <span class="n">StoppingByEvaluations</span><span class="p">(</span><span class="n">max_evaluations</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>STEP-2:</strong> We run our algorithm algorithm and plot the Pareto Front on the graph. jMetalPy has its own plot interface <code>jmetal.lab.visualization.Plot()</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.util.solution</span> <span class="k">import</span> <span class="n">get_non_dominated_solutions</span>
+<span class="kn">from</span> <span class="nn">jmetal.lab.visualization</span> <span class="k">import</span> <span class="n">Plot</span>
+
+<span class="c1"># run and get results</span>
+<span class="n">algorithm</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">front</span> <span class="o">=</span> <span class="n">get_non_dominated_solutions</span><span class="p">(</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_result</span><span class="p">())</span> 
+
+<span class="c1"># plot the results</span>
+<span class="n">plot_front</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pareto front approximation&#39;</span><span class="p">,</span> <span class="n">axis_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;f2&#39;</span><span class="p">])</span>
+<span class="n">plot_front</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">NSGAII-ZDT1&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;NSGAII-ZDT1&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="blog_imgs/ZDTParetos.png" width=680></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Build-Our-Own-Problem">3. Build Our Own Problem<a class="anchor-link" href="#3.-Build-Our-Own-Problem">&#182;</a></h2><p>In previous examples, we directly use the pre-defined optimization problem <code>Knapsack</code> and <code>ZDT1</code>. However, in practice, we have to build our own optimization problem to meet the specific requirements. Let's declare a new problem in just <strong>THREE</strong> steps!</p>
+<p><strong>STEP-1:</strong> Declare the customized problem class <strong>MyProblem</strong> and make it inherit one specific of the optimization problem (e.g., <strong>FloatProblem</strong>).</p>
+<p><strong>STEP-2:</strong> Initialize necessary parameters, such as <code>number_of_variable</code>, <code>number_of_objectives</code>, of the problem in the constructor (i.e., <code>__init__</code>).</p>
+<p><strong>STEP-3:</strong> Rewrite the functions <code>evaluate()</code> to define the way to evaluate the fitness score of each solution. This function takes the solution as the input and add the calculated fitness (i.e., objective attribute) to the solution.</p>
+<p>Based on the above three steps, we re-build the ZDT1 problem in our own Python snippet,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.core.problem</span> <span class="k">import</span> <span class="n">FloatProblem</span>
+<span class="kn">from</span> <span class="nn">jmetal.core.solution</span> <span class="k">import</span> <span class="n">FloatSolution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">MyProblem</span><span class="p">(</span><span class="n">FloatProblem</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_variables</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># initial parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_variables</span> <span class="o">=</span> <span class="n">number_of_variables</span> <span class="c1"># decision variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_objectives</span> <span class="o">=</span> <span class="mi">2</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_constraints</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_variables</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_variables</span><span class="p">)]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_directions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">MINIMIZE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MINIMIZE</span><span class="p">]</span> <span class="c1"># both objectives should be minimized</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c1"># objectives&#39; name</span>
+              
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatSolution</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        define the way to evaluate one solution, i.e., calculate the objectives of each solution</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_f1</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span> <span class="c1"># calculate the 1st objective</span>
+        <span class="n">f2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_f2</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">f1</span><span class="p">)</span> <span class="c1"># calculate the 2nd objective     </span>
+        <span class="n">solution</span><span class="o">.</span><span class="n">objectives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f1</span>
+        <span class="n">solution</span><span class="o">.</span><span class="n">objectives</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">f2</span>
+        
+        <span class="k">return</span> <span class="n">solution</span>
+       
+    <span class="k">def</span> <span class="nf">eval_f1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">solution</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+       
+    <span class="k">def</span> <span class="nf">eval_f2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">f1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>      
+        <span class="n">g</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span> <span class="o">-</span> <span class="n">solution</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>      
+        <span class="n">constant</span> <span class="o">=</span> <span class="mf">9.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">number_of_variables</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">g</span><span class="o">*</span><span class="n">constant</span>
+       
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f1</span><span class="o">/</span><span class="n">g</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;My_ZDT1_problem&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above code snippet, there are few key points,</p>
+<ul>
+<li><p>We achieved a inherit chain when building class <code>myProblem</code>, i.e., <code>myProblem</code> -&gt; <code>FloatProblem</code> -&gt; <code>Problem</code>, which means the solution type to our problem is the Float Solution. <code>FloatProblem</code> is defined in the file <strong>jmetal.core.problem.py</strong>, we can find the other types of problems, such as <code>BinrayProblem</code>, <code>DoubleProblem</code> and <code>PermutationProblem</code>, which means the solution types to these problems are Binary Solution, Double Solution, and Permutation Solution, respectively.</p>
+</li>
+<li><p>The initial parameters vary from different categories of problems. E.g., a float type of problem (<code>FloatProblem</code>) needs the parameters of <code>self.lower_bound</code> and <code>self.upper_bound</code>, which are not required by a binary type of problem (<code>BinaryProblem</code>).</p>
+</li>
+<li><p>Super class <code>jmetal.core.problem.Problem</code> set the variables <code>self.MINIMIZE=-1</code> and <code>self.MAXIMIZE=1</code> to control the optimization direction.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">4. Apply Operators of Mutation, Crossover, and Selection<a class="anchor-link" href="#4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">&#182;</a></h2><p>The choice of mutation, crossover, and selection strategies play core roles in each evolutionary algorithm. The details of these strategies are out of the scope of this tutorial, one can find a description in other genetic algorithm tutorials (e.g., <a href="https://www.tutorialspoint.com/genetic_algorithms/index.htm">https://www.tutorialspoint.com/genetic_algorithms/index.htm</a>). The good news is that jMetalPy has already implemented many commonly-used strategies and support to be rewritten. We can simply find them in the source code and apply them to our own algorithm.</p>
+<table>
+<thead><tr>
+<th style="text-align:left">operators</th>
+<th style="text-align:left">source file</th>
+<th style="text-align:left">strategies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Mutation</td>
+<td style="text-align:left">jmetal.operator.mutation.py</td>
+<td style="text-align:left">BitFlipMutation, PolynomialMutation, SimpleRandomMutation,<br>UniformMutation, ...</td>
+</tr>
+<tr>
+<td style="text-align:left">Crossover</td>
+<td style="text-align:left">jmetal.operator.crossover.py</td>
+<td style="text-align:left">UniformMutation, SPXCrossover, ...</td>
+</tr>
+<tr>
+<td style="text-align:left">Selection</td>
+<td style="text-align:left">jmetal.operator.selection.py</td>
+<td style="text-align:left">RouletteWheelSelection, BinaryTournamentSelection, BestSolutionSelection,<br>NaryRandomSolutionSelection, ...</td>
+</tr>
+</tbody>
+</table>
+<p style="color:#0000ff;">:) Note that different operators fit for different types of problems (or solutions).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Build-Our-Own-Algorithm">5. Build Our Own Algorithm<a class="anchor-link" href="#5.-Build-Our-Own-Algorithm">&#182;</a></h2><h3 id="5.1-Evolutionary-framework-in-jMetalPy">5.1 Evolutionary framework in jMetalPy<a class="anchor-link" href="#5.1-Evolutionary-framework-in-jMetalPy">&#182;</a></h3><p>In jMetalPy, authors implement the standard evolutionary algorithm (algorithm skeleton) in the following 3 steps (as we plot before),</p>
+<ul>
+<li>Step A: Generate the initial population of individuals randomly. </li>
+<li>Step B: Evaluate the ﬁtness of each individual in that population </li>
+<li>Step C: Repeat the following regenerational steps until termination <ul>
+<li>C.1. Select the best-ﬁt individuals for reproduction. </li>
+<li>C.2. Breed new individuals through crossover and mutation operations to give birth to offspring. </li>
+<li>C.3. Evaluate the individual ﬁtness of new individuals. </li>
+<li>C.4. Replace least-ﬁt population with new individuals.</li>
+</ul>
+</li>
+</ul>
+<p>According to the source code, we find an explicit inheritance chain of each algorithm, e.g., <code>GeneticAlgorithm</code> -&gt; <code>EvolutionaryAlgorithm</code> -&gt; <code>Algorithm</code>, and <code>NSGAII</code> -&gt; <code>EvolutionaryAlgorithm</code> -&gt; <code>Algorithm</code>. In other words, jMetalPy implemented the details of specific algorithms step by step. The overall dependencies about algorithm in jMetalPy are as follows,</p>
+<p><img src="blog_imgs/GAlgorithm.png" width=700></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For better understanding the algorithm framework, I list the core part of three typical classes implemented in jMetal. Firstly, class <strong>Algorithm</strong> is the base class of all algorithms developed by jMetalPy, its <code>run()</code> function defines the framework of Step A,B,and C.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Algorithm</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">],</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">,</span> <span class="n">ABC</span><span class="p">)</span>  
+    <span class="c1"># core snippet of class Algorithm ...</span>
+        
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Execute the algorithm. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_computing_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_initial_solutions</span><span class="p">()</span>  <span class="c1">## Step A, population initialization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">)</span>    <span class="c1">## Step B, evaluate the 1st generation</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initializing progress&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_progress</span><span class="p">()</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Running main loop until termination criteria is met&#39;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_condition_is_met</span><span class="p">():</span>      <span class="c1">## Step C, population evolution untill the stopping condition is met</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_progress</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_computing_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_computing_time</span>
+    
+    <span class="c1"># ...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Secondly, class <strong>EvolutionaryAlgorithm</strong> implements class <strong>Algorithm</strong> by completing the function <code>step()</code> defined in <strong>Algorithm</strong>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">EvolutionaryAlgorithm</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">],</span> <span class="n">ABC</span><span class="p">):</span>
+    <span class="c1"># core snippet of class EvolutionaryAlgorithm ...</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">mating_population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">)</span>           <span class="c1"># Step C.1</span>
+        <span class="n">offspring_population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reproduction</span><span class="p">(</span><span class="n">mating_population</span><span class="p">)</span>  <span class="c1"># Step C.2</span>
+        <span class="n">offspring_population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">offspring_population</span><span class="p">)</span>   <span class="c1"># Step C.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">,</span> <span class="n">offspring_population</span><span class="p">)</span>  <span class="c1"># Step C.4</span>
+   
+    <span class="c1"># ...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Thirdly, Class <strong>GeneticAlgorithm</strong> implements class <strong>EvolutionaryAlgorithm</strong> by completing detailed methods, such as <code>reproduction()</code> and <code>replacement()</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">GeneticAlgorithm</span><span class="p">(</span><span class="n">EvolutionaryAlgorithm</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">]):</span>
+    <span class="c1"># core snippet of class GeneticAlgorithm ...</span>
+
+    <span class="k">def</span> <span class="nf">reproduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mating_population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">]:</span>
+        <span class="n">number_of_parents_to_combine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover_operator</span><span class="o">.</span><span class="n">get_number_of_parents</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mating_population</span><span class="p">)</span> <span class="o">%</span> <span class="n">number_of_parents_to_combine</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of parents&#39;</span><span class="p">)</span>
+
+        <span class="n">offspring_population</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offspring_population_size</span><span class="p">,</span> <span class="n">number_of_parents_to_combine</span><span class="p">):</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_parents_to_combine</span><span class="p">):</span>
+                <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mating_population</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])</span>
+
+            <span class="n">offspring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover_operator</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">solution</span> <span class="ow">in</span> <span class="n">offspring</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mutation_operator</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+                <span class="n">offspring_population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offspring_population</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offspring_population_size</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">offspring_population</span> 
+    
+    <span class="k">def</span> <span class="nf">replacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">],</span> <span class="n">offspring_population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">]:</span>
+        <span class="n">population</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offspring_population</span><span class="p">)</span>
+        <span class="n">population</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">objectives</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>       
+        <span class="k">return</span> <span class="n">population</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">R</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   
+    
+    <span class="c1"># ...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above code snippet, there are few key points,</p>
+<ul>
+<li>the population initialization (Step A) and solution evaluation (Step B) rely on the definition of the given problem (see <code>jmetal.core.problem</code>).</li>
+<li>the crossover, mutation, and selection rely on the definition of given hyperparameters (see <code>jmetal.operator.crossover</code>, <code>jmetal.operator.mutation</code>, and <code>jmetal.operator.selection</code>). </li>
+<li>the stop criterion is usually defined by maximum loop times (see <code>jmetal.util.termination_criterion</code>).</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Similarly, we can also inspect the details of class <strong>NSGAII</strong> and find that the major difference between NSGAII and other algorithms is the <code>replacement()</code> function, where NSGAII uses a non-dominated soring and crowding distance to determine which individual should be retained.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">NSGAII</span><span class="p">(</span><span class="n">GeneticAlgorithm</span><span class="p">[</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">]):</span>
+    <span class="c1"># core snippet of NSGAII ...</span>
+    
+    <span class="k">def</span> <span class="nf">replacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">],</span> <span class="n">offspring_population</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">S</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot; This method joins the current and offspring populations to produce the population of the next generation</span>
+<span class="sd">        by applying the ranking and crowding distance selection.</span>
+<span class="sd">        :param population: Parent population.</span>
+<span class="sd">        :param offspring_population: Offspring population.</span>
+<span class="sd">        :return: New population after ranking and crowding distance selection is applied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ranking</span> <span class="o">=</span> <span class="n">FastNonDominatedRanking</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dominance_comparator</span><span class="p">)</span>
+        <span class="n">density_estimator</span> <span class="o">=</span> <span class="n">CrowdingDistance</span><span class="p">()</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">RankingAndDensityEstimatorReplacement</span><span class="p">(</span><span class="n">ranking</span><span class="p">,</span> <span class="n">density_estimator</span><span class="p">,</span> <span class="n">RemovalPolicyType</span><span class="o">.</span><span class="n">ONE_SHOT</span><span class="p">)</span>
+        <span class="n">solutions</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">offspring_population</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">solutions</span>
+    
+    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">R</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">solutions</span>
+    
+    <span class="c1"># ...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.2-Customize-our-own-algorithm">5.2 Customize our own algorithm<a class="anchor-link" href="#5.2-Customize-our-own-algorithm">&#182;</a></h3><p>In jMetalPy, it's recommended to represent our algorithm as a class form, e.g., it's better to build a customized algorithm to inherit <code>NSGAII</code> than directly instantiate an object of <code>NSGAII</code>. The skeleton of a customized algorithm is like,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.algorithm.multiobjective</span> <span class="k">import</span> <span class="n">NSGAII</span>
+<span class="kn">from</span> <span class="nn">jmetal.operator</span> <span class="k">import</span> <span class="n">SBXCrossover</span><span class="p">,</span> <span class="n">PolynomialMutation</span><span class="p">,</span> <span class="n">BinaryTournamentSelection</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.termination_criterion</span> <span class="k">import</span> <span class="n">StoppingByEvaluations</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.comparator</span> <span class="k">import</span> <span class="n">MultiComparator</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.ranking</span> <span class="k">import</span> <span class="n">FastNonDominatedRanking</span>
+<span class="kn">from</span> <span class="nn">jmetal.util.density_estimator</span> <span class="k">import</span> <span class="n">CrowdingDistance</span>
+
+<span class="k">class</span> <span class="nc">MyAlgorithm</span><span class="p">(</span><span class="n">NSGAII</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">problem</span><span class="p">,</span> <span class="n">population_size</span><span class="p">,</span> <span class="n">offspring_population_size</span><span class="p">,</span> <span class="n">mutation_ratio</span><span class="p">,</span> <span class="n">crossver_ratio</span><span class="p">,</span> <span class="n">max_iteration_times</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">problem</span> <span class="o">=</span> <span class="n">problem</span><span class="p">,</span> 
+                         <span class="n">population_size</span> <span class="o">=</span> <span class="n">population_size</span><span class="p">,</span> 
+                         <span class="n">offspring_population_size</span> <span class="o">=</span> <span class="n">offspring_population_size</span><span class="p">,</span>
+                         <span class="n">mutation</span> <span class="o">=</span> <span class="n">PolynomialMutation</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">mutation_ratio</span><span class="p">,</span> <span class="n">distribution_index</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+                         <span class="n">crossover</span> <span class="o">=</span> <span class="n">SBXCrossover</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">crossver_ratio</span><span class="p">,</span> <span class="n">distribution_index</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> 
+                         <span class="n">selection</span> <span class="o">=</span> <span class="n">BinaryTournamentSelection</span><span class="p">(</span><span class="n">MultiComparator</span><span class="p">(</span>
+                                                         <span class="p">[</span><span class="n">FastNonDominatedRanking</span><span class="o">.</span><span class="n">get_comparator</span><span class="p">(),</span> 
+                                                          <span class="n">CrowdingDistance</span><span class="o">.</span><span class="n">get_comparator</span><span class="p">()])),</span>
+                         <span class="n">termination_criterion</span> <span class="o">=</span> <span class="n">StoppingByEvaluations</span><span class="p">(</span><span class="n">max_evaluations</span><span class="o">=</span><span class="n">max_iteration_times</span><span class="p">)</span>
+                        <span class="p">)</span>
+        
+    <span class="c1"># def replacement(self, population, offspring_population):   # how to generate the next population</span>
+    
+    <span class="c1"># def reproduction(self, mating_population) # how to crossover and mutation</span>
+    
+    <span class="c1"># ...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we use the customized algorithm (<code>MyAlgorithm</code>) to solve the customized problem (<code>MyProblem</code>) and plot the Pareto Front.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.util.solution</span> <span class="k">import</span> <span class="n">get_non_dominated_solutions</span>
+<span class="kn">from</span> <span class="nn">jmetal.lab.visualization</span> <span class="k">import</span> <span class="n">Plot</span>
+
+<span class="n">mp</span> <span class="o">=</span> <span class="n">MyProblem</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">MyAlgorithm</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">25000</span><span class="p">)</span>
+<span class="n">ma</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">front</span> <span class="o">=</span> <span class="n">get_non_dominated_solutions</span><span class="p">(</span><span class="n">ma</span><span class="o">.</span><span class="n">get_result</span><span class="p">())</span> 
+
+<span class="n">plot_front</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pareto front approximation&#39;</span><span class="p">,</span> <span class="n">axis_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;f2&#39;</span><span class="p">])</span>
+<span class="n">plot_front</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NSGAII-ZDT1&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;My-ZDT1&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Evaluate-Algorithms">6. Evaluate Algorithms<a class="anchor-link" href="#6.-Evaluate-Algorithms">&#182;</a></h2><p>Since there are many different evolutionary algorithms can be used to solve the same problem, it is imperative to compare them and choose the better ones. In single-objective algorithms, each individual has only one objective, we can simply compare the best solution found by each algorithm. While in multi-objective algorithms, things become much complicated for we need to design indicators to measure the approximation Pareto sets (i.e., non-dominated solutions) found by each algorithm. According to a prior study [1], the commonly-used indicators include Hypervolume, GD (Generational Distance), $\epsilon$, Spread, etc.</p>
+<p><strong>[1]</strong>  Riquelme et al. "Performance metrics in multi-objective optimization." (CLEI 2015)</p>
+<p>Here I only talk about how to use the available indicators provided by jMetal. The source code <strong>jmetal/core/quality_indicator.py</strong> has defined FitnessValue, GenerationalDistance (GD), InvertedGenerationalDistance (IGD), EpsilonIndicator ($\epsilon$), and HyperVolume.</p>
+<p>For the approximation front and reference front presented in Fig.4, here's an example of the calculation of the above indicators.</p>
+<p><img src="blog_imgs/approximation.png" width=400></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jmetal.core.quality_indicator</span> <span class="k">import</span> <span class="n">GenerationalDistance</span><span class="p">,</span><span class="n">InvertedGenerationalDistance</span><span class="p">,</span><span class="n">EpsilonIndicator</span><span class="p">,</span><span class="n">HyperVolume</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">1. reference front is the ground truth for the best solution in optimization problem.</span>
+<span class="sd">2. approximation front is the non-dominated solutions generated by algorithms.</span>
+<span class="sd">3. reference point is used to calculated the Hypervolume, which represent the maximum value in each objective.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">reference_front</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.833</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">0.435</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.333</span><span class="p">]])</span>
+<span class="n">approximation_front</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.1</span><span class="p">,</span> <span class="mf">0.952</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.8</span><span class="p">,</span> <span class="mf">0.714</span><span class="p">]])</span>
+<span class="n">reference_point</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])]</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">compute the indicators of GD, IGD, Epsilon, and Hypervolume</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">GD</span> <span class="o">=</span> <span class="n">GenerationalDistance</span><span class="p">(</span><span class="n">reference_front</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GD:&#39;</span><span class="p">,</span> <span class="n">GD</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">))</span>
+
+<span class="n">IGD</span> <span class="o">=</span> <span class="n">InvertedGenerationalDistance</span><span class="p">(</span><span class="n">reference_front</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;IGD:&#39;</span><span class="p">,</span> <span class="n">IGD</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">))</span>
+
+<span class="n">Epsilon</span> <span class="o">=</span> <span class="n">EpsilonIndicator</span><span class="p">(</span><span class="n">reference_front</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Epsilon:&#39;</span><span class="p">,</span> <span class="n">Epsilon</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">))</span>
+
+<span class="n">HV</span> <span class="o">=</span> <span class="n">HyperVolume</span><span class="p">(</span><span class="n">reference_point</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hypervolume:&#39;</span><span class="p">,</span> <span class="n">HV</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">approximation_front</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GD: 0.5169337778031657
+IGD: 0.6784946112350415
+Epsilon: 1.0
+Hypervolume: 2.233599999999999
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</body>
+
+ 
+
+
+</html>
+cro -->
 <!-- Load mathjax -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
