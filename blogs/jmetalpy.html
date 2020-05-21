@@ -13074,12 +13074,12 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered" style="background: url(https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered" style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/jmetalpy.png" width=400></p>
+<p><img src="blog_imgs/jmetalpy.png" width=400></p>
 <p style="text-align:center;font-size:12pt;color:#ff6600;">(* This jMetalPy tutorial is written by <i>Yongfeng Gu</i> on 2020.5.8.)</p><h2 id="0.-Basic-Introduction">0. Basic Introduction<a class="anchor-link" href="#0.-Basic-Introduction">&#182;</a></h2><p><strong>jMetalPy</strong> is a very nice toolkit providing commonly-used Evolutionary Algorithms (EAs) to solve the multi-objective or single-objective optimization problems. By using jMetalPy, one can easily implement the Greedy Search, Simulated Annealing, NSGA-II, IBEA, and SPEA2 algorithms for your own optimization problems. To give an intuitive impression of Evolutionary algorithm, I concluded a brief algorithm framework in jMetalPy is as follows (Step A, B, and C).</p>
-<p><img src="https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/GAFramwework.png" width=750></p>
+<p><img src="blog_imgs/GAFramwework.png" width=750></p>
 <p>Technically, jMetalPy is a Python version of the jMetal framework, it's widely used and already integrated into the PYPI (which means you can easily install jMetalPy by typing command like <code>pip install jmetalpy</code>). Here are some related documentations,</p>
 <ul>
 <li>Pypi: <a href="https://pypi.org/project/jmetalpy/">https://pypi.org/project/jmetalpy/</a>  </li>
@@ -13344,7 +13344,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/ZDTParetos.png" width=680></p>
+<p><img src="blog_imgs/ZDTParetos.png" width=680></p>
 
 </div>
 </div>
@@ -13479,7 +13479,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 </li>
 </ul>
 <p>According to the source code, we find an explicit inheritance chain of each algorithm, e.g., <code>GeneticAlgorithm</code> -&gt; <code>EvolutionaryAlgorithm</code> -&gt; <code>Algorithm</code>, and <code>NSGAII</code> -&gt; <code>EvolutionaryAlgorithm</code> -&gt; <code>Algorithm</code>. In other words, jMetalPy implemented the details of specific algorithms step by step. The overall dependencies about algorithm in jMetalPy are as follows,</p>
-<p><img src="https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/GAlgorithm.png" width=700></p>
+<p><img src="blog_imgs/GAlgorithm.png" width=700></p>
 
 </div>
 </div>
@@ -13747,7 +13747,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <p><strong>[1]</strong>  Riquelme et al. "Performance metrics in multi-objective optimization." (CLEI 2015)</p>
 <p>Here I only talk about how to use the available indicators provided by jMetal. The source code <strong>jmetal/core/quality_indicator.py</strong> has defined FitnessValue, GenerationalDistance (GD), InvertedGenerationalDistance (IGD), EpsilonIndicator ($\epsilon$), and HyperVolume.</p>
 <p>For the approximation front and reference front presented in Fig.4, here's an example of the calculation of the above indicators.</p>
-<p><img src="https://raw.githubusercontent.com/Gu-Youngfeng/Gu-Youngfeng.github.io/master/blogs/blog_imgs/approximation.png" width=400></p>
+<p><img src="blog_imgs/approximation.png" width=400></p>
 
 </div>
 </div>
