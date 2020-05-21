@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-
-<title>SMTSolver</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Blog - Z3 solver</title>
+<meta name="keywords" content="z3, SMT, solver">
+<meta name="description" content="Z3 is an efficient solver of the SMT problem (Satisfiability Modulo Theories). Compared with the SAT solver, Z3 can resolve not only the boolean formulas but also the non-boolean formulas in the constraint solving problems.">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13046,7 +13049,7 @@ div#notebook {
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
-<link rel="stylesheet" href="custom.css">
+<!--<link rel="stylesheet" href="custom.css">-->
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -13077,10 +13080,11 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered" style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p style="text-align:center;font-size:30pt;font-weight:bold">SMT Solver - Z3</p><p style="text-align:center;font-size:12pt;color:#ff6600;">(* This Z3 tutorial is written by <i>Yongfeng Gu</i> on 2020.5.15.)</p><h2 id="0.-Basic-Introductions">0. Basic Introductions<a class="anchor-link" href="#0.-Basic-Introductions">&#182;</a></h2><p><strong>Z3</strong> is an efficient solver of the SMT problem (Satisfiability Modulo Theories). Compared with the SAT solver, Z3 can resolve not only the <strong>boolean formulas</strong> (e.g., $a \vee b = True$) but also the <strong>non-boolean formulas</strong> (e.g., $a^2-b&lt;0$) in the constraint solving problems. What's more, Z3 also shows a more efficient and effective solving ability than SAT solvers. For example, Z3 can quickly (in seconds) solve a large SMT problem with thousands of variables and constraints.</p>
+<p style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px"> Z3: An Efficient SMT Solver for Constraints Solving Problems</p>
+<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h2 id="0.-Basic-Introductions">0. Basic Introductions<a class="anchor-link" href="#0.-Basic-Introductions">&#182;</a></h2><p><a href="https://en.wikipedia.org/wiki/Z3"><strong><em>Z3</em></strong></a> is an efficient solver of the SMT problem (Satisfiability Modulo Theories). Compared with the SAT solver, Z3 can resolve not only the <strong>boolean formulas</strong> (e.g., $a \vee b = True$) but also the <strong>non-boolean formulas</strong> (e.g., $a^2-b&lt;0$) in the constraint solving problems. What's more, Z3 also shows a more efficient and effective solving ability than SAT solvers. For example, Z3 can quickly (in seconds) solve a large SMT problem with thousands of variables and constraints.</p>
 <p>In this tutorial, we implemented the Z3 solver by using a widely-used and open-source python library, namely <a href="https://github.com/Z3Prover/z3">Z3Prover/z3</a>. Detailed documentation is at <a href="http://theory.stanford.edu/~nikolaj/programmingz3.html">http://theory.stanford.edu/~nikolaj/programmingz3.html</a>.</p>
 <p>Installing the Z3 library is quite easy, just typing only one command-line (if you have already installed Anaconda environment, then skip this step).</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">z3</span><span class="o">-</span><span class="n">solver</span>
+<div class="highlight"><pre><span></span><span class="err">$</span><span class="o">&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">z3</span><span class="o">-</span><span class="n">solver</span>
 </pre></div>
 
 </div>
