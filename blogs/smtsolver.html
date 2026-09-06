@@ -12,7 +12,7 @@
 
 
 
-<style type="text/css">
+<!-- <style type="text/css">
     /*!
 *
 * Twitter Bootstrap
@@ -13046,10 +13046,17 @@ div#notebook {
     page-break-inside: avoid; 
   }
 }
-</style>
+</style> -->
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <!--<link rel="stylesheet" href="custom.css">-->
+<!--Page icon-->
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<!--CSS styles-->
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/jQueryBike.css"/>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -13072,16 +13079,153 @@ div#notebook {
         }
     });
     </script>
+    <style id="tech-blog-theme">
+      /* :root { color-scheme: dark; font-size: 16px !important; } */
+      /* html, body { background: #070b14 !important; color: #cbd5e1 !important; }
+      /* body { position: relative !important; min-height: 100vh !important; font-family: "Segoe UI", Arial, sans-serif; } */
+      #notebook { background: transparent !important; padding: 0 !important; }
+      #notebook-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+      #notebook-container a, #notebook-container .rendered_html a { color: #67e8f9 !important; }
+      #notebook-container a:hover, #notebook-container .rendered_html a:hover { color: #c4b5fd !important; }
+      #notebook-container .rendered_html h1,
+      #notebook-container .rendered_html h2,
+      #notebook-container .rendered_html h3,
+      #notebook-container .rendered_html h4,
+      #notebook-container .rendered_html h5,
+      #notebook-container .rendered_html h6 { color: #67e8f9 !important; }
+      #notebook-container .rendered_html p { color: #cbd5e1 !important; text-align: justify; }
+      #notebook-container .rendered_html strong { color: #f1f5f9 !important; }
+      #notebook-container .rendered_html hr { color: rgba(148, 163, 184, 0.28) !important; background: rgba(148, 163, 184, 0.28) !important; }
+      #notebook-container div.cell { border-color: transparent !important; }
+      #notebook-container div.input_area,
+      #notebook-container div.output_subarea { background: #0b1424 !important; border-color: rgba(103, 232, 249, 0.18) !important; }
+      #notebook-container div.input_prompt { color: #67e8f9 !important; }
+      #notebook-container div.output_prompt { color: #c4b5fd !important; }
+      #notebook-container div.output_text,
+      #notebook-container div.output_area pre,
+      #notebook-container div.output_subarea pre { color: greenyellow !important; }
+      #notebook-container div.output_stderr { background: rgba(190, 24, 93, 0.2) !important; }
+      #notebook-container .highlight,
+      #notebook-container .highlight pre,
+      #notebook-container .highlight code,
+      #notebook-container .highlight span,
+      #notebook-container .rendered_html pre,
+      #notebook-container .rendered_html pre code,
+      #notebook-container .rendered_html code {
+        color: #e2e8f0 !important;
+        background: #0b1424 !important;
+        border-color: rgba(103, 232, 249, 0.18) !important;
+      }
+      #notebook-container .rendered_html code { padding: 1px 4px; }
+      #notebook-container .rendered_html blockquote { border-left: 3px solid #22d3ee; color: #cbd5e1; }
+      #notebook-container .rendered_html table { color: #cbd5e1 !important; background: #111c2e !important; }
+      #notebook-container .rendered_html thead { border-bottom-color: rgba(103, 232, 249, 0.35) !important; }
+      #notebook-container .rendered_html tbody tr:nth-child(odd) { background: rgba(148, 163, 184, 0.08) !important; }
+      #notebook-container .rendered_html tbody tr:hover { background: rgba(34, 211, 238, 0.12) !important; }
+      #notebook-container .MathJax,
+      #notebook-container .MathJax_Display { color: #e2e8f0 !important; }
+      .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; }
+      .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
+      .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: 0.78rem; font-weight: 700; text-align: center; }
+      .blog-toc a { display: block; padding: 5px 0; color: #a5f3fc; font-size: 0.72rem; font-weight: 700; line-height: 1.4; text-align: left; text-decoration: none; }
+      .blog-toc a:hover, .blog-toc a:focus-visible { color: #c4b5fd; text-decoration: none; }
+      @media (max-width: 767.98px) {
+        .site-nav .site-nav-links { display: none; gap: 4px; }
+        .site-nav.is-open .site-nav-links { display: flex; }
+        .main-page > .row > .sidebar { display: none !important; }
+        #notebook { width: 100% !important; max-width: 100% !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html { max-width: 100% !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_wrapper,
+        #notebook-container .output_area,
+        #notebook-container .output_subarea { max-width: 100% !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_subarea { overflow-x: auto !important; }
+      }
+      .text_cell_render table{
+        font-size: 10pt !important;
+        margin: 0 auto;
+      }
+      .text_cell_render ul{
+        font-size: 10pt !important;
+      }
+      .text_cell_render th,
+      .text_cell_render td{
+        padding: 0.75em 0.8em !important;
+      }
+      .text_cell_render span{
+        font-size: 10pt !important;
+        color: #e2e8f0 !important;
+      }
+      .input pre{
+        font-size: 10pt !important;
+      }
+      .output_wrapper pre{
+        font-size: 10pt !important;
+      }
+    </style>
     <!-- End of mathjax configuration --></head>
 <body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+  <!--Main wrapper-->
+  <div class="container border main-page">
+    <nav class="site-nav" aria-label="Page sections">
+      <span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button>
+      <div class="site-nav-links" id="site-nav-links-blog">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#biography">Biography</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blogs">Daily Blogs</a>
+        <a href="../index.html#awards">Awards</a>
+      </div>
+    </nav>
+    <div class="row">
+      <!--Left part-->
+      <div class="col-sm-3 sidebar">
+        <div class="sidebar-content">
+          <div class="person-image">
+            <img src="../img/gu.png"></img>
+          </div>
+          <div class="person-info">
+            <div class="writing-sect"></div>
+            <p>Algorithm Expert</p>
+            <p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p>
+            <p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p>
+          </div>
+          <nav class="blog-toc" aria-label="Blog chapters">
+            <p class="blog-toc-title">Blog Chapters</p>
+            <a href="#0.-Basic-Introductions">0. Basic Introductions</a>
+            <a href="#1.-Solving-the-Boolean-constraints">1. Solving the Boolean constraints</a>
+            <a href="#2.-Solving-the-Numeric-constraints">2. Solving the Numeric constraints</a>
+            <a href="#3.-Solving-the-Bit-vector-constraints">3. Solving the Bit-vector constraints</a>
+            <a href="#4.-Solving-the-Functions">4. Solving the Functions</a>
+            <a href="#5.-Others">5. Others</a>
+          </nav>
+        </div>
+      </div>
+      <!--Right part-->
+      <div class="col-sm-9 content">
+        <div tabindex="-1" id="notebook" class="border-box-sizing">
+          <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered" style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px"> Z3: An Efficient SMT Solver for Constraints Solving Problems</p>
-<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h2 id="0.-Basic-Introductions">0. Basic Introductions<a class="anchor-link" href="#0.-Basic-Introductions">&#182;</a></h2><p><a href="https://en.wikipedia.org/wiki/Z3"><strong><em>Z3</em></strong></a> is an efficient solver of the SMT problem (Satisfiability Modulo Theories). Compared with the SAT solver, Z3 can resolve not only the <strong>boolean formulas</strong> (e.g., $a \vee b = True$) but also the <strong>non-boolean formulas</strong> (e.g., $a^2-b&lt;0$) in the constraint solving problems. What's more, Z3 also shows a more efficient and effective solving ability than SAT solvers. For example, Z3 can quickly (in seconds) solve a large SMT problem with thousands of variables and constraints.</p>
+<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h5  id="0.-Basic-Introductions">0. Basic Introductions<a class="anchor-link" href="#0.-Basic-Introductions">&#182;</a></h2><p><a href="https://en.wikipedia.org/wiki/Z3"><strong><em>Z3</em></strong></a> is an efficient solver of the SMT problem (Satisfiability Modulo Theories). Compared with the SAT solver, Z3 can resolve not only the <strong>boolean formulas</strong> (e.g., $a \vee b = True$) but also the <strong>non-boolean formulas</strong> (e.g., $a^2-b&lt;0$) in the constraint solving problems. What's more, Z3 also shows a more efficient and effective solving ability than SAT solvers. For example, Z3 can quickly (in seconds) solve a large SMT problem with thousands of variables and constraints.</p>
 <p>In this tutorial, we implemented the Z3 solver by using a widely-used and open-source python library, namely <a href="https://github.com/Z3Prover/z3">Z3Prover/z3</a>. Detailed documentation is at <a href="http://theory.stanford.edu/~nikolaj/programmingz3.html">http://theory.stanford.edu/~nikolaj/programmingz3.html</a>.</p>
 <p>Installing the Z3 library is quite easy, just typing only one command-line (if you have already installed Anaconda environment, then skip this step).</p>
 <div class="highlight"><pre><span></span><span class="err">$</span><span class="o">&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">z3</span><span class="o">-</span><span class="n">solver</span>
@@ -13093,7 +13237,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Solving-the-Boolean-constraints">1. Solving the Boolean constraints<a class="anchor-link" href="#1.-Solving-the-Boolean-constraints">&#182;</a></h2><p>Here's a simple usage of Z3 solver for solving the <strong>Boolean</strong> formulas. We use the function <code>Bool()</code> to declare the Boolean variable (or use <code>Bools()</code> to declare a series of Boolean vairables). We then declear a solver object <code>s=Slover()</code> and use the function <code>s.check()</code> to solve the constraints added by the function <code>s.add()</code>. Finally, the result is returned by the function <code>s.model()</code>.</p>
+<h5  id="1.-Solving-the-Boolean-constraints">1. Solving the Boolean constraints<a class="anchor-link" href="#1.-Solving-the-Boolean-constraints">&#182;</a></h2><p>Here's a simple usage of Z3 solver for solving the <strong>Boolean</strong> formulas. We use the function <code>Bool()</code> to declare the Boolean variable (or use <code>Bools()</code> to declare a series of Boolean vairables). We then declear a solver object <code>s=Slover()</code> and use the function <code>s.check()</code> to solve the constraints added by the function <code>s.add()</code>. Finally, the result is returned by the function <code>s.model()</code>.</p>
 <p><span style="color:blue">Note that **a solution of the given constraints is called a model** in Z3, so the function `s.model()` presents a possible solution of SMT problem.</span></p>
 
 </div>
@@ -13256,7 +13400,7 @@ Simplified: 3 + 3*x + y
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Solving-the-Numeric-constraints">2. Solving the Numeric constraints<a class="anchor-link" href="#2.-Solving-the-Numeric-constraints">&#182;</a></h2><p>Here's a simple  usage of Z3 solver for solving the <strong>numeric</strong> formulas. We use the function <code>Int()</code> to declare the Integer variable (or use <code>Ints()</code> to declare a series of Integer vairables).</p>
+<h5  id="2.-Solving-the-Numeric-constraints">2. Solving the Numeric constraints<a class="anchor-link" href="#2.-Solving-the-Numeric-constraints">&#182;</a></h2><p>Here's a simple  usage of Z3 solver for solving the <strong>numeric</strong> formulas. We use the function <code>Int()</code> to declare the Integer variable (or use <code>Ints()</code> to declare a series of Integer vairables).</p>
 <p><span style="color:blue">Note that <code>s.sexpr()</code> function, this function is used to present the intermediate formulas (i.e., <a href="http://en.wikipedia.org/wiki/S-expression">S-expression</a>) of math expression in Z3 solver.<span></p>
 
 </div>
@@ -13469,7 +13613,7 @@ parameters in check():
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Solving-the-Bit-vector-constraints">3. Solving the Bit-vector constraints<a class="anchor-link" href="#3.-Solving-the-Bit-vector-constraints">&#182;</a></h2><p>Besides solving the boolean and numeric types of formulas, Z3 also provided the solution on <strong>Bit-vector</strong> type of formulas. Specifically, the function <code>BitVec()</code> can be used to creates a bit-vector variable in Z3, e.g., <code>BitVec('x', 16)</code> means a 16-bit vector variable named <strong>x</strong>.</p>
+<h5  id="3.-Solving-the-Bit-vector-constraints">3. Solving the Bit-vector constraints<a class="anchor-link" href="#3.-Solving-the-Bit-vector-constraints">&#182;</a></h2><p>Besides solving the boolean and numeric types of formulas, Z3 also provided the solution on <strong>Bit-vector</strong> type of formulas. Specifically, the function <code>BitVec()</code> can be used to creates a bit-vector variable in Z3, e.g., <code>BitVec('x', 16)</code> means a 16-bit vector variable named <strong>x</strong>.</p>
 <p><span style="color:blue">Note that each Bit-vector is resented as a hexadeciaml format string. E.g., a **16-bits** vector variable is presented as **#x0000** and a **32-bits** vector variable is presented as **#x00000000**.</span></p>
 
 </div>
@@ -13600,7 +13744,7 @@ y: (bvadd y #x00000000)
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Solving-the-Functions">4. Solving the Functions<a class="anchor-link" href="#4.-Solving-the-Functions">&#182;</a></h2><p>An exciting capability of Z3 solver is that it can solve the <strong>un-interpreted functions</strong>. In Z3, all functions are un-interpreted before solving, which means that we do not need to know the internal structure of functions beforehand. Given some constraints about the function, Z3 is able to guess its implementation.</p>
+<h5  id="4.-Solving-the-Functions">4. Solving the Functions<a class="anchor-link" href="#4.-Solving-the-Functions">&#182;</a></h2><p>An exciting capability of Z3 solver is that it can solve the <strong>un-interpreted functions</strong>. In Z3, all functions are un-interpreted before solving, which means that we do not need to know the internal structure of functions beforehand. Given some constraints about the function, Z3 is able to guess its implementation.</p>
 <p>Here's the example of guessing the function <code>f</code> with constraints.</p>
 
 </div>
@@ -13661,7 +13805,7 @@ $$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Others">5. Others<a class="anchor-link" href="#5.-Others">&#182;</a></h2><h4 id="5.1-Tunning-the-Solver">5.1 Tunning the Solver<a class="anchor-link" href="#5.1-Tunning-the-Solver">&#182;</a></h4><p>In previous section, we simply call the <code>Slover()</code> function to instaniate a z3 solver, however, there are many key parameters can be set in this solver. In practice, we can tweak the possible values of such parameters using <code>Then()</code> and <code>With()</code> functions.</p>
+<h5  id="5.-Others">5. Others<a class="anchor-link" href="#5.-Others">&#182;</a></h2><h4 id="5.1-Tunning-the-Solver">5.1 Tunning the Solver<a class="anchor-link" href="#5.1-Tunning-the-Solver">&#182;</a></h4><p>In previous section, we simply call the <code>Slover()</code> function to instaniate a z3 solver, however, there are many key parameters can be set in this solver. In practice, we can tweak the possible values of such parameters using <code>Then()</code> and <code>With()</code> functions.</p>
 
 </div>
 </div>
@@ -13955,11 +14099,47 @@ is-quasi-pb : true if the goal is quasi-pb.
 </div>
 
 </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <!--JS scripts-->
+  <script src="../js/jquery-3.3.1.slim.min.js" ></script>
+  <script src="../js/popper.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      // activate the bike plugin
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      })
+      // print on the console
+      var mydate = new Date();
+      var time_str = mydate.toLocaleString(); 
+      console.info("%cHi, bro, welcome to my site!","color:green");
+      console.info("--------\nI'm Yongfeng Gu and I'm a currently a phd candidate at the school of computer science, Wuhan University, China. Contect me at yongfenggu@whu.edu.cn.");		
+      console.info("--------\nVisit on: "+time_str);
+    });
+  </script>
+  <script>
+    (function () {
+      document.querySelectorAll('.site-nav-toggle').forEach(function (toggle) {
+        var nav = toggle.closest('.site-nav');
+        var links = nav.querySelectorAll('.site-nav-links a');
+        toggle.addEventListener('click', function () {
+          var expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          nav.classList.toggle('is-open', !expanded);
+        });
+        links.forEach(function (link) {
+          link.addEventListener('click', function () {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('is-open');
+          });
+        });
+      });
+    }());
+  </script>
 </body>
-
- 
-
-
 </html>
