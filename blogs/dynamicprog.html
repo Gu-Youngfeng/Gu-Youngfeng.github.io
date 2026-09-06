@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Daily Blog - dynamic programming</title>
-<meta name="keywords" content="dynamic programming, DP, knapsack, levenshtein distance, longest common substring">
-<meta name="description" content="Dynamic Programming (DP) is a widely-used strategy in Computer Science, whose core idea is decomposing the original problem (often large and complicated) into several subproblems (often simple and easy to compute). That is, DP won't directly compute the original problem at once but turn to solve its subproblems iteratively.">
+<head>
+	<meta charset="utf-8">
+	<title>Gu's Daily blogs - Dynamic Programming</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--Author, keywords, and description-->
+	<meta name="author" content="Yongfeng">
+	<meta name="keywords" content="Yongfeng Gu, Dynamic programming">
+	<meta name="description" content="Dynamic Programming (DP) is a widely-used strategy in Computer Science, whose core idea is decomposing the original problem (often large and complicated) into several subproblems (often simple and easy to compute).">
+    <!--Page icon-->
+	<link rel="icon" href="../favicon.png" type="image/png">
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+	<!--CSS styles-->
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/jQueryBike.css"/>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-
-<style type="text/css">
+    <!-- <style type="text/css">
     /*!
 *
 * Twitter Bootstrap
@@ -25,14 +29,14 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-html {
+/* html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 body {
   margin: 0;
-}
+} */
 article,
 aside,
 details,
@@ -12949,111 +12953,100 @@ ul.typeahead-list  > li > a.pull-right {
   margin-top: 20px;
 }
 /*# sourceMappingURL=style.min.css.map */
+    </style> -->
+    <style type="text/css">
+        .highlight .hll { background-color: #ffffcc }
+        .highlight  { background: #f8f8f8; }
+        .highlight .c { color: #408080; font-style: italic } /* Comment */
+        .highlight .err { border: 1px solid #FF0000 } /* Error */
+        .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+        .highlight .o { color: #666666 } /* Operator */
+        .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+        .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+        .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+        .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+        .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+        .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+        .highlight .gd { color: #A00000 } /* Generic.Deleted */
+        .highlight .ge { font-style: italic } /* Generic.Emph */
+        .highlight .gr { color: #FF0000 } /* Generic.Error */
+        .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+        .highlight .gi { color: #00A000 } /* Generic.Inserted */
+        .highlight .go { color: #888888 } /* Generic.Output */
+        .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+        .highlight .gs { font-weight: bold } /* Generic.Strong */
+        .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+        .highlight .gt { color: #0044DD } /* Generic.Traceback */
+        .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+        .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+        .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+        .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+        .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+        .highlight .kt { color: #B00040 } /* Keyword.Type */
+        .highlight .m { color: #666666 } /* Literal.Number */
+        .highlight .s { color: #BA2121 } /* Literal.String */
+        .highlight .na { color: #7D9029 } /* Name.Attribute */
+        .highlight .nb { color: #008000 } /* Name.Builtin */
+        .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+        .highlight .no { color: #880000 } /* Name.Constant */
+        .highlight .nd { color: #AA22FF } /* Name.Decorator */
+        .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+        .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+        .highlight .nf { color: #0000FF } /* Name.Function */
+        .highlight .nl { color: #A0A000 } /* Name.Label */
+        .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+        .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+        .highlight .nv { color: #19177C } /* Name.Variable */
+        .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+        .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+        .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+        .highlight .mf { color: #666666 } /* Literal.Number.Float */
+        .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+        .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+        .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+        .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+        .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+        .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+        .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+        .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+        .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+        .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+        .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+        .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+        .highlight .sx { color: #008000 } /* Literal.String.Other */
+        .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+        .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+        .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+        .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+        .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+        .highlight .vc { color: #19177C } /* Name.Variable.Class */
+        .highlight .vg { color: #19177C } /* Name.Variable.Global */
+        .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+        .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+        .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f8f8f8; }
-.highlight .c { color: #408080; font-style: italic } /* Comment */
-.highlight .err { border: 1px solid #FF0000 } /* Error */
-.highlight .k { color: #008000; font-weight: bold } /* Keyword */
-.highlight .o { color: #666666 } /* Operator */
-.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
-.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
-.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
-.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
-.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
-.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
-.highlight .gd { color: #A00000 } /* Generic.Deleted */
-.highlight .ge { font-style: italic } /* Generic.Emph */
-.highlight .gr { color: #FF0000 } /* Generic.Error */
-.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.highlight .gi { color: #00A000 } /* Generic.Inserted */
-.highlight .go { color: #888888 } /* Generic.Output */
-.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
-.highlight .gs { font-weight: bold } /* Generic.Strong */
-.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.highlight .gt { color: #0044DD } /* Generic.Traceback */
-.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
-.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
-.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
-.highlight .kp { color: #008000 } /* Keyword.Pseudo */
-.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
-.highlight .kt { color: #B00040 } /* Keyword.Type */
-.highlight .m { color: #666666 } /* Literal.Number */
-.highlight .s { color: #BA2121 } /* Literal.String */
-.highlight .na { color: #7D9029 } /* Name.Attribute */
-.highlight .nb { color: #008000 } /* Name.Builtin */
-.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.highlight .no { color: #880000 } /* Name.Constant */
-.highlight .nd { color: #AA22FF } /* Name.Decorator */
-.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
-.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
-.highlight .nf { color: #0000FF } /* Name.Function */
-.highlight .nl { color: #A0A000 } /* Name.Label */
-.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
-.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
-.highlight .nv { color: #19177C } /* Name.Variable */
-.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.highlight .w { color: #bbbbbb } /* Text.Whitespace */
-.highlight .mb { color: #666666 } /* Literal.Number.Bin */
-.highlight .mf { color: #666666 } /* Literal.Number.Float */
-.highlight .mh { color: #666666 } /* Literal.Number.Hex */
-.highlight .mi { color: #666666 } /* Literal.Number.Integer */
-.highlight .mo { color: #666666 } /* Literal.Number.Oct */
-.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
-.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
-.highlight .sc { color: #BA2121 } /* Literal.String.Char */
-.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
-.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
-.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
-.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
-.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
-.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
-.highlight .sx { color: #008000 } /* Literal.String.Other */
-.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
-.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
-.highlight .ss { color: #19177C } /* Literal.String.Symbol */
-.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
-.highlight .fm { color: #0000FF } /* Name.Function.Magic */
-.highlight .vc { color: #19177C } /* Name.Variable.Class */
-.highlight .vg { color: #19177C } /* Name.Variable.Global */
-.highlight .vi { color: #19177C } /* Name.Variable.Instance */
-.highlight .vm { color: #19177C } /* Name.Variable.Magic */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+    <style type="text/css">
+    /* Overrides of notebook CSS for static HTML export */
+
+    div#notebook {
+    overflow: visible;
+    border-top: none;
+    }@media print {
+    div.cell {
+        display: block;
+        page-break-inside: avoid;
+    } 
+    div.output_wrapper { 
+        display: block;
+        page-break-inside: avoid; 
+    }
+    div.output { 
+        display: block;
+        page-break-inside: avoid; 
+    }
+    }
     </style>
-
-
-<style type="text/css">
-/* Overrides of notebook CSS for static HTML export */
-body {
-  overflow: visible;
-  padding: 8px;
-}
-
-div#notebook {
-  overflow: visible;
-  border-top: none;
-}@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-  div.output { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-}
-</style>
-
-<!-- Custom stylesheet, it must be in the same directory as the html file -->
-<!--<link rel="stylesheet" href="custom.css">-->
-
-<!-- Loading mathjax macro -->
-<!-- Load mathjax -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
@@ -13073,12 +13066,151 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration --></head>
+    <style id="tech-blog-theme">
+      /* :root { color-scheme: dark; font-size: 16px !important; } */
+      /* html, body { background: #070b14 !important; color: #cbd5e1 !important; }
+      /* body { position: relative !important; min-height: 100vh !important; font-family: "Segoe UI", Arial, sans-serif; } */
+      #notebook { background: transparent !important; padding: 0 !important; }
+      #notebook-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+      #notebook-container a, #notebook-container .rendered_html a { color: #67e8f9 !important; }
+      #notebook-container a:hover, #notebook-container .rendered_html a:hover { color: #c4b5fd !important; }
+      #notebook-container .rendered_html h1,
+      #notebook-container .rendered_html h2,
+      #notebook-container .rendered_html h3,
+      #notebook-container .rendered_html h4,
+      #notebook-container .rendered_html h5,
+      #notebook-container .rendered_html h6 { color: #67e8f9 !important; }
+      #notebook-container .rendered_html p { color: #cbd5e1 !important; text-align: justify; }
+      #notebook-container .rendered_html strong { color: #f1f5f9 !important; }
+      #notebook-container .rendered_html hr { color: rgba(148, 163, 184, 0.28) !important; background: rgba(148, 163, 184, 0.28) !important; }
+      #notebook-container div.cell { border-color: transparent !important; }
+      #notebook-container div.input_area,
+      #notebook-container div.output_subarea { background: #0b1424 !important; border-color: rgba(103, 232, 249, 0.18) !important; }
+      #notebook-container div.input_prompt { color: #67e8f9 !important; }
+      #notebook-container div.output_prompt { color: #c4b5fd !important; }
+      #notebook-container div.output_text,
+      #notebook-container div.output_area pre,
+      #notebook-container div.output_subarea pre { color: greenyellow !important; }
+      #notebook-container div.output_stderr { background: rgba(190, 24, 93, 0.2) !important; }
+      #notebook-container .highlight,
+      #notebook-container .highlight pre,
+      #notebook-container .highlight code,
+      #notebook-container .highlight span,
+      #notebook-container .rendered_html pre,
+      #notebook-container .rendered_html pre code,
+      #notebook-container .rendered_html code {
+        color: #e2e8f0 !important;
+        background: #0b1424 !important;
+        border-color: rgba(103, 232, 249, 0.18) !important;
+      }
+      #notebook-container .rendered_html code { padding: 1px 4px; }
+      #notebook-container .rendered_html blockquote { border-left: 3px solid #22d3ee; color: #cbd5e1; }
+      #notebook-container .rendered_html table { color: #cbd5e1 !important; background: #111c2e !important; }
+      #notebook-container .rendered_html thead { border-bottom-color: rgba(103, 232, 249, 0.35) !important; }
+      #notebook-container .rendered_html tbody tr:nth-child(odd) { background: rgba(148, 163, 184, 0.08) !important; }
+      #notebook-container .rendered_html tbody tr:hover { background: rgba(34, 211, 238, 0.12) !important; }
+      #notebook-container .MathJax,
+      #notebook-container .MathJax_Display { color: #e2e8f0 !important; }
+      .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; }
+      .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
+      .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: 0.78rem; font-weight: 700; text-align: center; }
+      .blog-toc a { display: block; padding: 5px 0; color: #a5f3fc; font-size: 0.72rem; font-weight: 700; line-height: 1.4; text-align: left; text-decoration: none; }
+      .blog-toc a:hover, .blog-toc a:focus-visible { color: #c4b5fd; text-decoration: none; }
+      @media (max-width: 767.98px) {
+        .site-nav .site-nav-links { display: none; gap: 4px; }
+        .site-nav.is-open .site-nav-links { display: flex; }
+        .main-page > .row > .sidebar { display: none !important; }
+        #notebook { width: 100% !important; max-width: 100% !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html { max-width: 100% !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_wrapper,
+        #notebook-container .output_area,
+        #notebook-container .output_subarea { max-width: 100% !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_subarea { overflow-x: auto !important; }
+      }
+      .text_cell_render table{
+        font-size: 10pt !important;
+        margin: 0 auto;
+      }
+      .text_cell_render ul{
+        font-size: 10pt !important;
+      }
+      .text_cell_render th,
+      .text_cell_render td{
+        padding: 0.75em 0.8em !important;
+      }
+      .text_cell_render span{
+        font-size: 10pt !important;
+        color: #e2e8f0 !important;
+      }
+      .input pre{
+        font-size: 10pt !important;
+      }
+      .output_wrapper pre{
+        font-size: 10pt !important;
+      }
+    </style>
+    
+</head>
 <body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+	<!--Main wrapper-->
+	<div class="container border main-page">
+		<nav class="site-nav" aria-label="Page sections">
+			<span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span>
+			<button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button>
+			<div class="site-nav-links" id="site-nav-links-blog">
+				<a href="../index.html">Home</a>
+				<a href="../index.html#biography">Biography</a>
+				<a href="../index.html#publications">Publications</a>
+				<a href="../index.html#blogs">Daily Blogs</a>
+				<a href="../index.html#awards">Awards</a>
+			</div>
+		</nav>
+		<div class="row">
+			<!--Left part-->
+			<div class="col-sm-3 sidebar">
+				<div class="sidebar-content">
+					<div class="person-image">
+						<img src="../img/gu.png"></img>
+					</div>
+					<div class="person-info">
+						<div class="writing-sect"></div>
+						<p>Algorithm Expert</p>
+						<p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p>
+						<p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p>
+					</div>
+					<nav class="blog-toc" aria-label="Blog chapters">
+						<p class="blog-toc-title">Blog Chapters</p>
+						<a href="#1.-Knapsack-Problem">1. Knapsack Problem</a>
+						<a href="#2.-Levenshtein-Distance">2. Levenshtein Distance</a>
+						<a href="#3.-Longest-Common-Substring-Problem">3. Longest Common Substring Problem</a>
+					</nav>
+					<!--<div class="person-footer">
+						<p>This page is powered by <em>Yongfeng</em></p>
+						<p>Updated on <span class="footer">May 5th, 2025</span>.</p>
+					</div>-->
+				</div>
+			</div>
+			<!--Right part-->
+			<div class="col-sm-9 content">
+				<div tabindex="-1" id="notebook" class="border-box-sizing">
+          <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered" style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px"> Dynamic Programming: Solving Subproblems by Steps</p>
@@ -13090,7 +13222,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Knapsack-Problem">1. Knapsack Problem<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h2><p>The <a href="https://en.wikipedia.org/wiki/Knapsack_problem"><strong><em>knapsack problem</em></strong></a> aims to find a subset of $n$ items, each of which has a value $v_i$ and a weight $w_i$, under the total weight limit $W$ meanwhile achieve the maximum value. Suppose the basic information of $n$ items are as follows,</p>
+<h5 id="1.-Knapsack-Problem">1. Knapsack Problem<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h2><p>The <a href="https://en.wikipedia.org/wiki/Knapsack_problem"><strong><em>knapsack problem</em></strong></a> aims to find a subset of $n$ items, each of which has a value $v_i$ and a weight $w_i$, under the total weight limit $W$ meanwhile achieve the maximum value. Suppose the basic information of $n$ items are as follows,</p>
 <table>
 <thead><tr>
 <th style="text-align:left">Attribute</th>
@@ -13570,7 +13702,7 @@ Maximum Values: 1700
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Levenshtein-Distance">2. Levenshtein Distance<a class="anchor-link" href="#2.-Levenshtein-Distance">&#182;</a></h2><p><a href="https://en.wikipedia.org/wiki/Levenshtein_distance"><strong><em>Levenshtein Distance</em></strong></a> is one of the most widely-used edit distances to measure the difference between two strings, which is designed by the famous Russian scientist <a href="https://en.wikipedia.org/wiki/Vladimir_Levenshtein">Vladimir Levenstein</a> in 1965. In a nutshell, Levenshtein Distance calculates the least edit times when transforming one string to another one. The edit types include the <strong>deletion, insertion,</strong> and <strong>replacement</strong>.</p>
+<h5 id="2.-Levenshtein-Distance">2. Levenshtein Distance<a class="anchor-link" href="#2.-Levenshtein-Distance">&#182;</a></h2><p><a href="https://en.wikipedia.org/wiki/Levenshtein_distance"><strong><em>Levenshtein Distance</em></strong></a> is one of the most widely-used edit distances to measure the difference between two strings, which is designed by the famous Russian scientist <a href="https://en.wikipedia.org/wiki/Vladimir_Levenshtein">Vladimir Levenstein</a> in 1965. In a nutshell, Levenshtein Distance calculates the least edit times when transforming one string to another one. The edit types include the <strong>deletion, insertion,</strong> and <strong>replacement</strong>.</p>
 <p><img src="blog_imgs/LD.png" width=720></p>
 
 </div>
@@ -13856,7 +13988,7 @@ Levenshtein Distance: 3
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Longest-Common-Substring-Problem">3. Longest Common Substring Problem<a class="anchor-link" href="#3.-Longest-Common-Substring-Problem">&#182;</a></h2><p>The <a href="https://en.wikipedia.org/wiki/Longest_common_substring_problem"><strong><em>Longest Common Subtring Problem</em></strong></a> (LCS) aims to find out the longest common substring between two comparable strings. For example, string 'XYZABC' and string 'ABCXYZAY' are two comparable strings, the common substring between these two strings are 'XY', 'XYZ', 'XYZA', 'AB', 'BC', 'ABC', etc. However, among these substrings, 'XYZA' has the largest length (4) and should be the output of the LCS problem.</p>
+<h5 id="3.-Longest-Common-Substring-Problem">3. Longest Common Substring Problem<a class="anchor-link" href="#3.-Longest-Common-Substring-Problem">&#182;</a></h2><p>The <a href="https://en.wikipedia.org/wiki/Longest_common_substring_problem"><strong><em>Longest Common Subtring Problem</em></strong></a> (LCS) aims to find out the longest common substring between two comparable strings. For example, string 'XYZABC' and string 'ABCXYZAY' are two comparable strings, the common substring between these two strings are 'XY', 'XYZ', 'XYZA', 'AB', 'BC', 'ABC', etc. However, among these substrings, 'XYZA' has the largest length (4) and should be the output of the LCS problem.</p>
 <p><img src="blog_imgs/LCS.png" width=550></p>
 
 </div>
@@ -13997,11 +14129,50 @@ Longest Common Substring: [&#39;X&#39;, &#39;Y&#39;, &#39;Z&#39;, &#39;A&#39;]
 </div>
 </div>
 </div>
-    </div>
-  </div>
+          </div>
+        </div>
+				
+
+				
+			</div>
+		</div>
+	</div>
+	<!--JS scripts-->
+	<script src="../js/jquery-3.3.1.slim.min.js" ></script>
+	<script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// activate the bike plugin
+			$(function () {
+				$('[data-toggle="popover"]').popover()
+			})
+			// print on the console
+			var mydate = new Date();
+			var time_str = mydate.toLocaleString(); 
+			console.info("%cHi, bro, welcome to my site!","color:green");
+			console.info("--------\nI'm Yongfeng Gu and I'm a currently a phd candidate at the school of computer science, Wuhan University, China. Contect me at yongfenggu@whu.edu.cn.");		
+			console.info("--------\nVisit on: "+time_str);
+		});
+	</script>
+	<script>
+		(function () {
+			document.querySelectorAll('.site-nav-toggle').forEach(function (toggle) {
+				var nav = toggle.closest('.site-nav');
+				var links = nav.querySelectorAll('.site-nav-links a');
+				toggle.addEventListener('click', function () {
+					var expanded = toggle.getAttribute('aria-expanded') === 'true';
+					toggle.setAttribute('aria-expanded', String(!expanded));
+					nav.classList.toggle('is-open', !expanded);
+				});
+				links.forEach(function (link) {
+					link.addEventListener('click', function () {
+						toggle.setAttribute('aria-expanded', 'false');
+						nav.classList.remove('is-open');
+					});
+				});
+			});
+		}());
+	</script>
 </body>
-
- 
-
-
 </html>
