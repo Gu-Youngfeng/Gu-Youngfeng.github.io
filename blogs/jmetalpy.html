@@ -12,7 +12,7 @@
 
 
 
-<style type="text/css">
+<!-- <style type="text/css">
     /*!
 *
 * Twitter Bootstrap
@@ -13046,10 +13046,17 @@ div#notebook {
     page-break-inside: avoid; 
   }
 }
-</style>
+</style> -->
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <!--<link rel="stylesheet" href="custom.css">-->
+<!--Page icon-->
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<!--CSS styles-->
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../css/jQueryBike.css"/>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -13072,16 +13079,154 @@ div#notebook {
         }
     });
     </script>
+    <style id="tech-blog-theme">
+      /* :root { color-scheme: dark; font-size: 16px !important; } */
+      /* html, body { background: #070b14 !important; color: #cbd5e1 !important; }
+      /* body { position: relative !important; min-height: 100vh !important; font-family: "Segoe UI", Arial, sans-serif; } */
+      #notebook { background: transparent !important; padding: 0 !important; }
+      #notebook-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+      #notebook-container a, #notebook-container .rendered_html a { color: #67e8f9 !important; }
+      #notebook-container a:hover, #notebook-container .rendered_html a:hover { color: #c4b5fd !important; }
+      #notebook-container .rendered_html h1,
+      #notebook-container .rendered_html h2,
+      #notebook-container .rendered_html h3,
+      #notebook-container .rendered_html h4,
+      #notebook-container .rendered_html h5,
+      #notebook-container .rendered_html h6 { color: #67e8f9 !important; }
+      #notebook-container .rendered_html p { color: #cbd5e1 !important; text-align: justify; }
+      #notebook-container .rendered_html strong { color: #f1f5f9 !important; }
+      #notebook-container .rendered_html hr { color: rgba(148, 163, 184, 0.28) !important; background: rgba(148, 163, 184, 0.28) !important; }
+      #notebook-container div.cell { border-color: transparent !important; }
+      #notebook-container div.input_area,
+      #notebook-container div.output_subarea { background: #0b1424 !important; border-color: rgba(103, 232, 249, 0.18) !important; }
+      #notebook-container div.input_prompt { color: #67e8f9 !important; }
+      #notebook-container div.output_prompt { color: #c4b5fd !important; }
+      #notebook-container div.output_text,
+      #notebook-container div.output_area pre,
+      #notebook-container div.output_subarea pre { color: greenyellow !important; }
+      #notebook-container div.output_stderr { background: rgba(190, 24, 93, 0.2) !important; }
+      #notebook-container .highlight,
+      #notebook-container .highlight pre,
+      #notebook-container .highlight code,
+      #notebook-container .highlight span,
+      #notebook-container .rendered_html pre,
+      #notebook-container .rendered_html pre code,
+      #notebook-container .rendered_html code {
+        color: #e2e8f0 !important;
+        background: #0b1424 !important;
+        border-color: rgba(103, 232, 249, 0.18) !important;
+      }
+      #notebook-container .rendered_html code { padding: 1px 4px; }
+      #notebook-container .rendered_html blockquote { border-left: 3px solid #22d3ee; color: #cbd5e1; }
+      #notebook-container .rendered_html table { color: #cbd5e1 !important; background: #111c2e !important; }
+      #notebook-container .rendered_html thead { border-bottom-color: rgba(103, 232, 249, 0.35) !important; }
+      #notebook-container .rendered_html tbody tr:nth-child(odd) { background: rgba(148, 163, 184, 0.08) !important; }
+      #notebook-container .rendered_html tbody tr:hover { background: rgba(34, 211, 238, 0.12) !important; }
+      #notebook-container .MathJax,
+      #notebook-container .MathJax_Display { color: #e2e8f0 !important; }
+      .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; }
+      .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, 0.2); }
+      .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: 0.78rem; font-weight: 700; text-align: center; }
+      .blog-toc a { display: block; padding: 5px 0; color: #a5f3fc; font-size: 0.72rem; font-weight: 700; line-height: 1.4; text-align: left; text-decoration: none; }
+      .blog-toc a:hover, .blog-toc a:focus-visible { color: #c4b5fd; text-decoration: none; }
+      @media (max-width: 767.98px) {
+        .site-nav .site-nav-links { display: none; gap: 4px; }
+        .site-nav.is-open .site-nav-links { display: flex; }
+        .main-page > .row > .sidebar { display: none !important; }
+        #notebook { width: 100% !important; max-width: 100% !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html { max-width: 100% !important; overflow-x: hidden !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_wrapper,
+        #notebook-container .output_area,
+        #notebook-container .output_subarea { max-width: 100% !important; }
+        #notebook-container .rendered_html table,
+        #notebook-container .rendered_html pre,
+        #notebook-container .output_subarea { overflow-x: auto !important; }
+      }
+      .text_cell_render table{
+        font-size: 10pt !important;
+        margin: 0 auto;
+      }
+      .text_cell_render ul{
+        font-size: 10pt !important;
+      }
+      .text_cell_render th,
+      .text_cell_render td{
+        padding: 0.75em 0.8em !important;
+      }
+      .text_cell_render span{
+        font-size: 10pt !important;
+        color: #e2e8f0 !important;
+      }
+      .input pre{
+        font-size: 10pt !important;
+      }
+      .output_wrapper pre{
+        font-size: 10pt !important;
+      }
+    </style>
     <!-- End of mathjax configuration --></head>
 <body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+  <!--Main wrapper-->
+  <div class="container border main-page">
+    <nav class="site-nav" aria-label="Page sections">
+      <span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button>
+      <div class="site-nav-links" id="site-nav-links-blog">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#biography">Biography</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blogs">Daily Blogs</a>
+        <a href="../index.html#awards">Awards</a>
+      </div>
+    </nav>
+    <div class="row">
+      <!--Left part-->
+      <div class="col-sm-3 sidebar">
+        <div class="sidebar-content">
+          <div class="person-image">
+            <img src="../img/gu.png"></img>
+          </div>
+          <div class="person-info">
+            <div class="writing-sect"></div>
+            <p>Algorithm Expert</p>
+            <p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p>
+            <p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p>
+          </div>
+          <nav class="blog-toc" aria-label="Blog chapters">
+            <p class="blog-toc-title">Blog Chapters</p>
+            <a href="#0.-Basic-Introduction">0. Basic Introduction</a>
+            <a href="#1.-Single-objective-Optimization">1. Single-objective Optimization</a>
+            <a href="#2.-Multi-objective-Optimization">2. Multi-objective Optimization</a>
+            <a href="#3.-Build-Our-Own-Problem">3. Build Our Own Problem</a>
+            <a href="#4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">4. Operators of Mutation, Crossover, and Selection</a>
+            <a href="#5.-Build-Our-Own-Algorithm">5. Build Our Own Algorithm</a>
+            <a href="#6.-Evaluate-Algorithms">6. Evaluate Algorithms</a>
+          </nav>
+        </div>
+      </div>
+      <!--Right part-->
+      <div class="col-sm-9 content">
+        <div tabindex="-1" id="notebook" class="border-box-sizing">
+          <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered " style="background: url(blog_imgs/flag.png) left top no-repeat;"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered "><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px">JMetalPy: An evolutionary algorithm framework for solving the optimization problems</p>
-<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h2 id="0.-Basic-Introduction">0. Basic Introduction<a class="anchor-link" href="#0.-Basic-Introduction">&#182;</a></h2><p><a href="https://jmetal.github.io/jMetalPy/index.html"><strong><em>jMetalPy</em></strong></a> is a very nice toolkit providing commonly-used Evolutionary Algorithms (EAs) to solve the multi-objective or single-objective optimization problems. By using jMetalPy, one can easily implement the Greedy Search, Simulated Annealing, NSGA-II, IBEA, and SPEA2 algorithms for your own optimization problems. To give an intuitive impression of Evolutionary algorithm, I concluded a brief algorithm framework in jMetalPy is as follows (Step A, B, and C).</p>
+<p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">May, 2020</b></p><h5  id="0.-Basic-Introduction">0. Basic Introduction<a class="anchor-link" href="#0.-Basic-Introduction">&#182;</a></h2><p><a href="https://jmetal.github.io/jMetalPy/index.html"><strong><em>jMetalPy</em></strong></a> is a very nice toolkit providing commonly-used Evolutionary Algorithms (EAs) to solve the multi-objective or single-objective optimization problems. By using jMetalPy, one can easily implement the Greedy Search, Simulated Annealing, NSGA-II, IBEA, and SPEA2 algorithms for your own optimization problems. To give an intuitive impression of Evolutionary algorithm, I concluded a brief algorithm framework in jMetalPy is as follows (Step A, B, and C).</p>
 <p><img src="blog_imgs/GAFramwework.png" width=750></p>
 <p>Technically, jMetalPy is a Python version of the jMetal framework, it's widely used and already integrated into the PYPI (which means you can easily install jMetalPy by typing command like <code>pip install jmetalpy</code>). Here are some related documentations,</p>
 <ul>
@@ -13099,7 +13244,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Single-objective-Optimization">1. Single-objective Optimization<a class="anchor-link" href="#1.-Single-objective-Optimization">&#182;</a></h2><h3 id="1.1-Problem">1.1 Problem<a class="anchor-link" href="#1.1-Problem">&#182;</a></h3><p><strong>Knapsack Problem:</strong> The Knapsack Problem [1] is a problem in combinatorial optimization: Suppose that we have $n$ items, each with a weight ($w_i$) and a value ($v_i$), we try to select a subset ($T \subsetneqq \{0,1,2...,n\}$) of this items so that the total weight is less than or equal to a given limit ($W &gt; 0$) and the total value is as large as possible.</p>
+<h5  id="1.-Single-objective-Optimization">1. Single-objective Optimization<a class="anchor-link" href="#1.-Single-objective-Optimization">&#182;</a></h2><h3 id="1.1-Problem">1.1 Problem<a class="anchor-link" href="#1.1-Problem">&#182;</a></h3><p><strong>Knapsack Problem:</strong> The Knapsack Problem [1] is a problem in combinatorial optimization: Suppose that we have $n$ items, each with a weight ($w_i$) and a value ($v_i$), we try to select a subset ($T \subsetneqq \{0,1,2...,n\}$) of this items so that the total weight is less than or equal to a given limit ($W &gt; 0$) and the total value is as large as possible.</p>
 $$
 \mbox{Knapsack:} \ \ \ maximize \ \sum_{i \in T}v_i \ \ \ s.t., \sum_{i \in T}w_i \leq W
 $$<p>To make problem easier to understand, we set $m=5$, $w = \{2,2,6,5,4\}$, $v = \{6,3,5,4,6\}$, and $W=10$.</p>
@@ -13261,7 +13406,7 @@ $$<p>To make problem easier to understand, we set $m=5$, $w = \{2,2,6,5,4\}$, $v
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Multi-objective-Optimization">2. Multi-objective Optimization<a class="anchor-link" href="#2.-Multi-objective-Optimization">&#182;</a></h2><h3 id="2.1-Problem">2.1 Problem<a class="anchor-link" href="#2.1-Problem">&#182;</a></h3><p><strong>ZDT1 Problem:</strong> ZDT1 is a typical optimization problem from paper [1] and also a suitable example for introducing jMetalPy. Suppose that we have $m$ decision variables ($x_i$) to minimize two objective functions, i.e., $f_1$ and $f_2$. Each of $x_i$ should be in the range of [0,1]. ZDT1 problem can be summarized as follows,</p>
+<h5  id="2.-Multi-objective-Optimization">2. Multi-objective Optimization<a class="anchor-link" href="#2.-Multi-objective-Optimization">&#182;</a></h2><h3 id="2.1-Problem">2.1 Problem<a class="anchor-link" href="#2.1-Problem">&#182;</a></h3><p><strong>ZDT1 Problem:</strong> ZDT1 is a typical optimization problem from paper [1] and also a suitable example for introducing jMetalPy. Suppose that we have $m$ decision variables ($x_i$) to minimize two objective functions, i.e., $f_1$ and $f_2$. Each of $x_i$ should be in the range of [0,1]. ZDT1 problem can be summarized as follows,</p>
 $$
 \mbox{ZDT1:} \ \
 \begin{cases}
@@ -13352,7 +13497,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Build-Our-Own-Problem">3. Build Our Own Problem<a class="anchor-link" href="#3.-Build-Our-Own-Problem">&#182;</a></h2><p>In previous examples, we directly use the pre-defined optimization problem <code>Knapsack</code> and <code>ZDT1</code>. However, in practice, we have to build our own optimization problem to meet the specific requirements. Let's declare a new problem in just <strong>THREE</strong> steps!</p>
+<h5  id="3.-Build-Our-Own-Problem">3. Build Our Own Problem<a class="anchor-link" href="#3.-Build-Our-Own-Problem">&#182;</a></h2><p>In previous examples, we directly use the pre-defined optimization problem <code>Knapsack</code> and <code>ZDT1</code>. However, in practice, we have to build our own optimization problem to meet the specific requirements. Let's declare a new problem in just <strong>THREE</strong> steps!</p>
 <p><strong>STEP-1:</strong> Declare the customized problem class <strong>MyProblem</strong> and make it inherit one specific of the optimization problem (e.g., <strong>FloatProblem</strong>).</p>
 <p><strong>STEP-2:</strong> Initialize necessary parameters, such as <code>number_of_variable</code>, <code>number_of_objectives</code>, of the problem in the constructor (i.e., <code>__init__</code>).</p>
 <p><strong>STEP-3:</strong> Rewrite the functions <code>evaluate()</code> to define the way to evaluate the fitness score of each solution. This function takes the solution as the input and add the calculated fitness (i.e., objective attribute) to the solution.</p>
@@ -13434,7 +13579,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">4. Apply Operators of Mutation, Crossover, and Selection<a class="anchor-link" href="#4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">&#182;</a></h2><p>The choice of mutation, crossover, and selection strategies play core roles in each evolutionary algorithm. The details of these strategies are out of the scope of this tutorial, one can find a description in other genetic algorithm tutorials (e.g., <a href="https://www.tutorialspoint.com/genetic_algorithms/index.htm">https://www.tutorialspoint.com/genetic_algorithms/index.htm</a>). The good news is that jMetalPy has already implemented many commonly-used strategies and support to be rewritten. We can simply find them in the source code and apply them to our own algorithm.</p>
+<h5  id="4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">4. Apply Operators of Mutation, Crossover, and Selection<a class="anchor-link" href="#4.-Apply-Operators-of-Mutation,-Crossover,-and-Selection">&#182;</a></h2><p>The choice of mutation, crossover, and selection strategies play core roles in each evolutionary algorithm. The details of these strategies are out of the scope of this tutorial, one can find a description in other genetic algorithm tutorials (e.g., <a href="https://www.tutorialspoint.com/genetic_algorithms/index.htm">https://www.tutorialspoint.com/genetic_algorithms/index.htm</a>). The good news is that jMetalPy has already implemented many commonly-used strategies and support to be rewritten. We can simply find them in the source code and apply them to our own algorithm.</p>
 <table>
 <thead><tr>
 <th style="text-align:left">operators</th>
@@ -13467,7 +13612,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Build-Our-Own-Algorithm">5. Build Our Own Algorithm<a class="anchor-link" href="#5.-Build-Our-Own-Algorithm">&#182;</a></h2><h3 id="5.1-Evolutionary-framework-in-jMetalPy">5.1 Evolutionary framework in jMetalPy<a class="anchor-link" href="#5.1-Evolutionary-framework-in-jMetalPy">&#182;</a></h3><p>In jMetalPy, authors implement the standard evolutionary algorithm (algorithm skeleton) in the following 3 steps (as we plot before),</p>
+<h5  id="5.-Build-Our-Own-Algorithm">5. Build Our Own Algorithm<a class="anchor-link" href="#5.-Build-Our-Own-Algorithm">&#182;</a></h2><h3 id="5.1-Evolutionary-framework-in-jMetalPy">5.1 Evolutionary framework in jMetalPy<a class="anchor-link" href="#5.1-Evolutionary-framework-in-jMetalPy">&#182;</a></h3><p>In jMetalPy, authors implement the standard evolutionary algorithm (algorithm skeleton) in the following 3 steps (as we plot before),</p>
 <ul>
 <li>Step A: Generate the initial population of individuals randomly. </li>
 <li>Step B: Evaluate the ﬁtness of each individual in that population </li>
@@ -13744,7 +13889,7 @@ $$<p><strong>NSGA-II Algorithm:</strong> NSGA-II is a famous multi-objective opt
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.-Evaluate-Algorithms">6. Evaluate Algorithms<a class="anchor-link" href="#6.-Evaluate-Algorithms">&#182;</a></h2><p>Since there are many different evolutionary algorithms can be used to solve the same problem, it is imperative to compare them and choose the better ones. In single-objective algorithms, each individual has only one objective, we can simply compare the best solution found by each algorithm. While in multi-objective algorithms, things become much complicated for we need to design indicators to measure the approximation Pareto sets (i.e., non-dominated solutions) found by each algorithm. According to a prior study [1], the commonly-used indicators include Hypervolume, GD (Generational Distance), $\epsilon$, Spread, etc.</p>
+<h5  id="6.-Evaluate-Algorithms">6. Evaluate Algorithms<a class="anchor-link" href="#6.-Evaluate-Algorithms">&#182;</a></h2><p>Since there are many different evolutionary algorithms can be used to solve the same problem, it is imperative to compare them and choose the better ones. In single-objective algorithms, each individual has only one objective, we can simply compare the best solution found by each algorithm. While in multi-objective algorithms, things become much complicated for we need to design indicators to measure the approximation Pareto sets (i.e., non-dominated solutions) found by each algorithm. According to a prior study [1], the commonly-used indicators include Hypervolume, GD (Generational Distance), $\epsilon$, Spread, etc.</p>
 <p><strong>[1]</strong>  Riquelme et al. "Performance metrics in multi-objective optimization." (CLEI 2015)</p>
 <p>Here I only talk about how to use the available indicators provided by jMetal. The source code <strong>jmetal/core/quality_indicator.py</strong> has defined FitnessValue, GenerationalDistance (GD), InvertedGenerationalDistance (IGD), EpsilonIndicator ($\epsilon$), and HyperVolume.</p>
 <p>For the approximation front and reference front presented in Fig.4, here's an example of the calculation of the above indicators.</p>
@@ -13812,11 +13957,47 @@ Hypervolume: 2.233599999999999
 </div>
 
 </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <!--JS scripts-->
+  <script src="../js/jquery-3.3.1.slim.min.js" ></script>
+  <script src="../js/popper.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      // activate the bike plugin
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      })
+      // print on the console
+      var mydate = new Date();
+      var time_str = mydate.toLocaleString(); 
+      console.info("%cHi, bro, welcome to my site!","color:green");
+      console.info("--------\nI'm Yongfeng Gu and I'm a currently a phd candidate at the school of computer science, Wuhan University, China. Contect me at yongfenggu@whu.edu.cn.");		
+      console.info("--------\nVisit on: "+time_str);
+    });
+  </script>
+  <script>
+    (function () {
+      document.querySelectorAll('.site-nav-toggle').forEach(function (toggle) {
+        var nav = toggle.closest('.site-nav');
+        var links = nav.querySelectorAll('.site-nav-links a');
+        toggle.addEventListener('click', function () {
+          var expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          nav.classList.toggle('is-open', !expanded);
+        });
+        links.forEach(function (link) {
+          link.addEventListener('click', function () {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('is-open');
+          });
+        });
+      });
+    }());
+  </script>
 </body>
-
- 
-
-
 </html>
