@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gu's Daily blogs - Q-Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Yongfeng">
+  <meta name="keywords" content="Yongfeng Gu, Q-Learning, Reinforcement Learning, Bellman Equation">
+  <meta name="description" content="A practical introduction to Q-Learning, Bellman equations, Q-tables, and epsilon-greedy exploration through a grid-world robot example.">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/jQueryBike.css">
+  <style id="tech-blog-theme">
+    #notebook { background: transparent !important; padding: 0 !important; }
+    #notebook-container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+    #notebook-container a { color: #67e8f9 !important; }
+    #notebook-container a:hover { color: #c4b5fd !important; }
+    #notebook-container h1, #notebook-container h2, #notebook-container h5, #notebook-container h4 { color: #67e8f9 !important; }
+    #notebook-container p { color: #cbd5e1 !important; font-size: .76rem !important; text-align: justify; }
+    #notebook-container strong { color: #f1f5f9 !important; }
+    #notebook-container hr { border-color: rgba(148, 163, 184, .28) !important; }
+    #notebook-container pre, #notebook-container code { color: #e2e8f0 !important; background: #0b1424 !important; border-color: rgba(103, 232, 249, .18) !important; }
+    #notebook-container pre { padding: 12px; font-size: .76rem !important; white-space: pre; overflow-x: auto; }
+    #notebook-container ul { font-size: .76rem !important; }
+    #notebook-container code { padding: 1px 4px; }
+    #notebook-container blockquote { border-left: 3px solid #22d3ee; color: #cbd5e1; }
+    #notebook-container table { width: 100%; color: #cbd5e1 !important; font-size: .76rem !important; background: #111c2e !important; }
+    #notebook-container th, #notebook-container td { padding: .75em .8em !important; font-size: .76rem !important; border: 1px solid rgba(148, 163, 184, .22); }
+    #notebook-container tbody tr:nth-child(odd) { background: rgba(148, 163, 184, .08); }
+    .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; }
+    .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, .2); }
+    .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: .78rem; font-weight: 700; text-align: center; }
+    .blog-toc a { display: block; padding: 5px 0; color: #a5f3fc; font-size: .72rem; font-weight: 700; line-height: 1.4; text-align: left; text-decoration: none; }
+    .blog-toc a:hover { color: #c4b5fd; text-decoration: none; }
+    @media (max-width: 767.98px) {
+      .site-nav .site-nav-links { display: none; gap: 4px; }
+      .site-nav.is-open .site-nav-links { display: flex; }
+      .main-page > .row > .sidebar { display: none !important; }
+      #notebook, #notebook-container, #notebook-container .rendered_html { width: 100% !important; max-width: 100% !important; padding: 0 !important; overflow-x: hidden !important; }
+      #notebook-container table, #notebook-container pre { max-width: 100% !important; overflow-x: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container border main-page">
+    <nav class="site-nav" aria-label="Page sections">
+      <span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button>
+      <div class="site-nav-links" id="site-nav-links-blog">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#biography">Biography</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="../index.html#blogs">Daily Blogs</a>
+        <a href="../index.html#awards">Awards</a>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="col-sm-3 sidebar">
+        <div class="sidebar-content">
+          <div class="person-image"><img src="../img/gu.png" alt="Yongfeng Gu"></div>
+          <div class="person-info">
+            <div class="writing-sect"></div>
+            <p>Algorithm Expert</p>
+            <p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p>
+            <p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p>
+          </div>
+          <nav class="blog-toc" aria-label="Blog chapters">
+            <p class="blog-toc-title">Blog Chapters</p>
+            <a href="#core-question">The Core Question</a>
+            <a href="#q-function">What Is Q(s, a)?</a>
+            <a href="#bellman-equation">Bellman Equation</a>
+            <a href="#q-learning-update">Q-Learning Update</a>
+            <a href="#algorithm">The Complete Algorithm</a>
+            <a href="#summary">Summary</a>
+          </nav>
+        </div>
+      </div>
+      <div class="col-sm-9 content">
+        <div tabindex="-1" id="notebook" class="border-box-sizing">
+          <div class="container" id="notebook-container">
+            <article class="text_cell_render border-box-sizing rendered_html">
+              <h3 style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px">Demystifying Q-Learning: From Bellman Equations to a Robot Finding Its Way Home</h3>
+              <p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">October 7, 2026</b></p>
+              <p><em><b>Reinforcement Learning</b></em> (RL) doesn't have to be intimidating. In this post, we build Q-Learning from the ground up using a simple 6x6 grid game, and develop an intuition for every symbol along the way.</p>
+              
+
+              <h5 id="core-question">The Core Question<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <p>Imagine a robot placed at the top-left corner of a 6x6 grid. Its goal is to reach the bottom-right corner in as few steps as possible. The grid contains three types of cells besides the start and goal:</p>
+              <ul><li><strong>Blank cells</strong>: nothing happens.</li><li><strong>Mine cells (M)</strong>: the robot explodes and the episode ends.</li><li><strong>Lightning cells (L)</strong>: the robot gets a speed boost (a small bonus reward).</li></ul>
+              <pre>     col0   col1   col2   col3   col4   col5
+row0  [ S  ] [    ] [ L  ] [    ] [    ] [    ]
+row1  [    ] [ M  ] [    ] [    ] [ M  ] [    ]
+row2  [ L  ] [    ] [    ] [ L  ] [    ] [ M  ]
+row3  [    ] [ M  ] [    ] [    ] [    ] [    ]
+row4  [    ] [    ] [ M  ] [ L  ] [ M  ] [    ]
+row5  [    ] [ L  ] [    ] [    ] [    ] [ G  ]</pre>
+              <p>The robot has no map. It doesn't know where the mines are. It must <strong>learn</strong> the optimal path purely through experience. This is the essence of Reinforcement Learning, and Q-Learning is one of the most elegant algorithms to solve it.</p>
+              <hr>
+
+              <h5 id="q-function">What Is Q(s, a)?<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <p>Before we get to the algorithm, we need to understand the central object in Q-Learning: the <strong>Q-function</strong>, written as Q(s, a).</p>
+              <p>Q stands for “Quality”. Q(s, a) answers a single question:</p>
+              <blockquote><p><em>In state s, if I take action a, and then behave optimally forever after, how much total reward can I expect to accumulate?</em></p></blockquote>
+              <p>Q(s, a) is not the immediate reward from taking action a. It is the <strong>cumulative discounted reward</strong> over the entire remaining trajectory. The immediate reward is just the first term; the rest comes from all future decisions.</p>
+              <p>Think of choosing a college major: its true “quality” includes not only satisfaction today, but career prospects, earning potential, and life satisfaction over decades. Q(s, a) captures the full long-term value, not just short-term gratification.</p>
+              <p>In our grid game:</p>
+              <ul><li><strong>State s</strong> = the robot's position (row, col), giving us 36 possible states.</li><li><strong>Action a</strong> = one of {Up, Down, Left, Right}.</li><li><strong>Q(s, a)</strong> = the expected total reward starting from position s, moving in direction a, and then always making the best possible decisions afterward.</li></ul>
+              <p>If Q((0,0), Down) = 72 and Q((0,0), Right) = 65, then moving Down from the start is the better long-term choice.</p>
+              <hr>
+
+              <h5>The Q-Table: A Lookup Table for Wisdom</h5>
+              <p>In tabular Q-Learning, we store Q(s, a) in a simple 2D table called the <strong>Q-Table</strong>. Rows are states, columns are actions, and each cell holds a number. At the beginning, every cell is initialized to zero:</p>
+              <pre>           Up     Down    Left   Right
+(0,0)  [   0   |   0   |   0   |   0   ]
+(0,1)  [   0   |   0   |   0   |   0   ]
+(0,2)  [   0   |   0   |   0   |   0   ]
+ ...
+(5,5)  [   0   |   0   |   0   |   0   ]</pre>
+              <p>As the robot explores and observes outcomes, it fills in the table. Once it converges, the optimal policy is trivially extracted: for each state, pick the action with the highest Q-value. The robot has learned the shortest safe path.</p>
+              <pre>           Up     Down    Left   Right
+(0,0)  [  ...  |  72   |  ...  |  65   ]   ← Down is best → go Down
+(1,0)  [  ...  |  76   |  ...  |  60   ]   ← Down is best → go Down
+(2,0)  [  ...  |  80   |  ...  |  55   ]   ← Down is best (lightning nearby!)
+(3,0)  [  ...  |  84   |  ...  |  50   ]
+(4,0)  [  ...  |  88   |  ...  |  45   ]
+(5,0)  [  ...  |   -   |  ...  |  90   ]   ← Right is best → go Right
+(5,1)  [  ...  |   -   |  ...  |  92   ]   ← Lightning boosts the value
+(5,2)  [  ...  |   -   |  ...  |  94   ]
+(5,3)  [  ...  |   -   |  ...  |  96   ]
+(5,4)  [  ...  |   -   |  ...  |  98   ]
+(5,5)  [   0   |   0   |   0   |   0   ]   ← Goal, no decision needed</pre>
+              <hr>
+
+              <h5 id="bellman-equation">Where Does the Update Rule Come From? The Bellman Equation<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <p>The Q-Table doesn't fill itself. We need a learning rule, and that rule comes from one of the most fundamental ideas in dynamic programming: the <strong>Bellman Equation</strong>.</p>
+              <blockquote><p><em>The value of a decision equals the immediate reward plus the discounted value of the next state under the best future action.</em></p></blockquote>
+              <pre>Q(s, a) = R(s, a) + γ · max₍a′₎ Q(s′, a′)</pre>
+              <ul><li><code>R(s, a)</code> is the immediate reward after action a in state s.</li><li><code>γ</code> (gamma) is the <strong>discount factor</strong> (0 &lt; γ &lt; 1), controlling how much we care about future rewards.</li><li><code>s′</code> is the new state after taking action a.</li><li><code>max₍a′₎ Q(s′, a′)</code> is the best Q-value achievable from the new state.</li></ul>
+              <p>The total future reward from (s, a) decomposes into what you get now and the discounted future Q-value. The decomposition is recursive, which makes it powerful.</p>
+              <p>With γ = 0.95, if moving Right from (5,4) leads to the goal with reward +100, then Q((5,4), Right) ≈ 100. One step earlier, Q((5,3), Right) ≈ 0.95 × 100 = 95. The value <strong>propagates backward</strong> from the goal, diminishing by γ at each step.</p>
+              <hr>
+
+              <h5 id="q-learning-update">From Theory to Learning: The Q-Learning Update<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <p>The Bellman Equation tells us what Q-values <strong>should</strong> be if we know the environment perfectly. Our robot does not, so it learns by doing: after every step, it compares what happened with what it expected, then nudges the Q-value toward that experience.</p>
+              <pre>Q(s, a) ← Q(s, a) + α · [ r + γ · max₍a′₎ Q(s′, a′) − Q(s, a) ]</pre>
+              <p>The bracketed term is the <strong>TD (Temporal Difference) Error</strong>:</p>
+              <table><thead><tr><th>Component</th><th>Meaning</th></tr></thead><tbody><tr><td><code>r + γ · max Q(s′, a′)</code></td><td><strong>Target</strong>: what experience says Q(s, a) should be</td></tr><tr><td><code>Q(s, a)</code></td><td><strong>Old estimate</strong>: what we previously believed</td></tr><tr><td>Their difference</td><td><strong>Surprise</strong>: how wrong we were</td></tr><tr><td><code>α</code> (learning rate)</td><td>How aggressively to adjust, typically 0.1–0.5</td></tr></tbody></table>
+              <p>If the surprise is positive, we increase Q(s, a); if negative, we decrease it. Over thousands of iterations, Q-values converge to their true values.</p>
+              <hr>
+
+              <h5>Walking Through the Algorithm: Episode by Episode</h5>
+              <p>Use α = 0.1, γ = 0.95, and ε = 0.3 for exploration.</p>
+              <p><strong>Reward scheme:</strong></p><ul><li>Each step: −1 (encourages shorter paths)</li><li>Reaching goal G: +100</li><li>Hitting mine M: −100 (episode ends)</li><li>Landing on lightning L: +5</li></ul>
+              <h5>Episode 1: Blind Exploration</h5>
+              <p>The Q-Table is all zeros. At (0,0), a random number 0.15 &lt; ε makes the robot explore and pick Right. It reaches (0,1), a blank cell, and receives r = −1:</p>
+              <pre>Q((0,0), Right) ← 0 + 0.1 × [−1 + 0.95 × 0 − 0] = −0.1</pre>
+              <p>At (0,1), the robot next moves Down to (1,1), a mine. The episode ends:</p>
+              <pre>Q((0,1), Down) ← 0 + 0.1 × [−100 + 0 − 0] = −10.0</pre>
+              <p>The robot now slightly disfavors Right from the start and has learned a harsh lesson about moving Down from (0,1).</p>
+              <h5>Episode 2: A Glimmer of Hope</h5>
+              <p>Through ε-greedy exploration, the robot discovers (0,0) → (1,0) → (2,0), where (2,0) is lightning. Choosing Down at (1,0) gets r = +5:</p>
+              <pre>Q((1,0), Down) ← 0 + 0.1 × [5 + 0.95 × 0 − 0] = +0.5</pre>
+              <p>The first positive Q-value appears. If the robot eventually reaches the goal, the +100 reward slowly propagates backward through the trajectory.</p>
+              <h5>Episode 3 and Beyond: Value Propagation</h5>
+              <pre>Episode N:    Q((5,4), Right) learns ≈ 100    ("Right from here → goal!")
+Episode N+1:  Q((5,3), Right) learns ≈ 95     ("Right → (5,4) → goal")
+Episode N+2:  Q((5,2), Right) learns ≈ 90.25
+Episode N+3:  Q((5,1), Right) learns ≈ 85.7</pre>
+              <p>After hundreds of episodes, the optimal policy emerges: the robot walks down the left boundary, collects lightning boosts, avoids mines, then walks right along the bottom to the goal.</p>
+              <pre>     col0   col1   col2   col3   col4   col5
+row0  [ ↓  ] [    ] [ L  ] [    ] [    ] [    ]
+row1  [ ↓  ] [ M  ] [    ] [    ] [ M  ] [    ]
+row2  [ ↓  ] [    ] [    ] [ L  ] [    ] [ M  ]
+row3  [ ↓  ] [ M  ] [    ] [    ] [    ] [    ]
+row4  [ ↓  ] [    ] [ M  ] [ L  ] [ M  ] [    ]
+row5  [ →  ] [ →  ] [ →  ] [ →  ] [ →  ] [ G  ]</pre>
+              <hr>
+
+              <h5>Three Concepts That Make Q-Learning Work</h5>
+              <p><strong>Exploration</strong> (controlled by ε) sometimes ignores the Q-Table and tries a random action. This discovers new paths, lightning cells, and the goal.</p>
+              <p><strong>Exploitation</strong> follows the action with the highest current Q-value. This leverages what the robot has already learned.</p>
+              <p><strong>Trial and Error</strong> observes every outcome and updates the Q-Table. The trial is taking an action; the error is the gap between expectation and reality, namely the TD Error.</p>
+              <p>Exploration decides <em>what to try</em>, exploitation decides <em>what to trust</em>, and trial-and-error turns experience into knowledge.</p>
+              <hr>
+
+              <h5 id="algorithm">The Complete Algorithm<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <p>Here is Q-Learning in pseudocode:</p>
+              <pre>Initialize Q-Table Q(s, a) = 0 for all s, a
+
+for each episode:
+    reset robot to start state s
+
+    while s is not the goal:
+        // Action selection: ε-greedy
+        if random() &lt; ε:
+            a = random action                    // Exploration
+        else:
+            a = argmax₍a′₎ Q(s, a′)             // Exploitation
+
+        // Execute action, observe outcome
+        take action a
+        observe reward r and new state s′
+
+        // Q-value update (Bellman-inspired)
+        target = r + γ × max₍a′₎ Q(s′, a′)
+        Q(s, a) ← Q(s, a) + α × (target − Q(s, a))
+
+        // Move to new state
+        s ← s′
+
+    // Optionally decay ε over time
+    ε ← ε × 0.995</pre>
+              <hr>
+
+              <h5>Why Does This Matter for Real-World Problems?</h5>
+              <p>The grid game is simple, but the principles scale. In ad bidding, the state might be remaining budget, time of day, and historical conversion rate. The action might be a bid multiplier; the reward, conversions; mines, budget exhaustion or CPA violations; lightning, a surge in traffic quality.</p>
+              <p>Q-Learning does not need a model of the environment or transition probabilities. It only needs to <strong>act, observe, and update</strong>. For problems with too many states for a table, Deep Q-Networks (DQN) replace the Q-Table with a neural network, but the core idea remains the same.</p>
+              <hr>
+
+              <h5 id="summary">Summary<a class="anchor-link" href="#1.-Knapsack-Problem">&#182;</a></h5>
+              <table><thead><tr><th>Concept</th><th>What It Means</th></tr></thead><tbody><tr><td><strong>Q(s, a)</strong></td><td>Expected cumulative future reward from action a, then optimal behavior</td></tr><tr><td><strong>Q-Table</strong></td><td>Lookup table storing Q(s, a) for every state-action pair</td></tr><tr><td><strong>Bellman Equation</strong></td><td>Q(s,a) = R(s,a) + γ · max Q(s′, a′)</td></tr><tr><td><strong>TD Error</strong></td><td>The gap between the observed target and the current Q estimate</td></tr><tr><td><strong>Update Rule</strong></td><td>Nudge Q toward reality using the TD Error</td></tr><tr><td><strong>Exploration</strong></td><td>Randomly try actions to discover information</td></tr><tr><td><strong>Exploitation</strong></td><td>Follow the best-known action</td></tr><tr><td><strong>Trial and Error</strong></td><td>The loop: act → observe → update</td></tr></tbody></table>
+              <p>Q-Learning is simultaneously simple to implement and profound in implication. Optimal behavior can emerge from curiosity (exploration), experience (trial and error), and a single recursive equation (Bellman). The robot does not know the map or plan ahead; it learns one step at a time until the shortest path reveals itself in the numbers.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../js/popper.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+    (function () {
+      document.querySelectorAll('.site-nav-toggle').forEach(function (toggle) {
+        var nav = toggle.closest('.site-nav');
+        var links = nav.querySelectorAll('.site-nav-links a');
+        toggle.addEventListener('click', function () {
+          var expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          nav.classList.toggle('is-open', !expanded);
+        });
+        links.forEach(function (link) {
+          link.addEventListener('click', function () {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('is-open');
+          });
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
