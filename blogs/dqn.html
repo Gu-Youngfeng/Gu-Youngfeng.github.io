@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gu's Daily blogs - Deep Q-Networks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Yongfeng">
+  <meta name="keywords" content="Yongfeng Gu, Deep Q-Network, DQN, Reinforcement Learning, Experience Replay, Target Network">
+  <meta name="description" content="An introduction to Deep Q-Networks, explaining neural Q-function approximation, experience replay, target networks, and DQN training.">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/jQueryBike.css">
+  <style id="tech-blog-theme">
+    #notebook { background: transparent !important; padding: 0 !important; }
+    #notebook-container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+    #notebook-container a { color: #67e8f9 !important; }
+    #notebook-container a:hover { color: #c4b5fd !important; }
+    #notebook-container h1, #notebook-container h2, #notebook-container h5, #notebook-container h4 { color: #67e8f9 !important; }
+    #notebook-container p { color: #cbd5e1 !important; font-size: .76rem !important; text-align: justify; }
+    #notebook-container strong { color: #f1f5f9 !important; }
+    #notebook-container hr { border-color: rgba(148, 163, 184, .28) !important; }
+    #notebook-container pre, #notebook-container code { color: #e2e8f0 !important; background: #0b1424 !important; border-color: rgba(103, 232, 249, .18) !important; }
+    #notebook-container pre { padding: 12px; font-size: .76rem !important; white-space: pre; overflow-x: auto; }
+    #notebook-container ul, #notebook-container ol, #notebook-container li { font-size: .76rem !important; }
+    #notebook-container code { padding: 1px 4px; font-size: .76rem !important; }
+    #notebook-container blockquote { border-left: 3px solid #22d3ee; color: #cbd5e1; }
+    #notebook-container table { width: 100%; color: #cbd5e1 !important; font-size: .76rem !important; background: #111c2e !important; }
+    #notebook-container th, #notebook-container td { padding: .75em .8em !important; font-size: .76rem !important; border: 1px solid rgba(148, 163, 184, .22); }
+    #notebook-container tbody tr:nth-child(odd) { background: rgba(148, 163, 184, .08); }
+    .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; }
+    .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, .2); }
+    .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: .78rem; font-weight: 700; text-align: center; }
+    .blog-toc a { display: block; padding: 5px 0; color: #a5f3fc; font-size: .72rem; font-weight: 700; line-height: 1.4; text-align: left; text-decoration: none; }
+    .blog-toc a:hover { color: #c4b5fd; text-decoration: none; }
+    @media (max-width: 767.98px) {
+      .site-nav .site-nav-links { display: none; gap: 4px; }
+      .site-nav.is-open .site-nav-links { display: flex; }
+      .main-page > .row > .sidebar { display: none !important; }
+      #notebook, #notebook-container, #notebook-container .rendered_html { width: 100% !important; max-width: 100% !important; padding: 0 !important; overflow-x: hidden !important; }
+      #notebook-container table, #notebook-container pre { max-width: 100% !important; overflow-x: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container border main-page">
+    <nav class="site-nav" aria-label="Page sections">
+      <span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button>
+      <div class="site-nav-links" id="site-nav-links-blog">
+        <a href="../index.html">Home</a><a href="../index.html#biography">Biography</a><a href="../index.html#publications">Publications</a><a href="../index.html#blogs">Daily Blogs</a><a href="../index.html#awards">Awards</a>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="col-sm-3 sidebar"><div class="sidebar-content">
+        <div class="person-image"><img src="../img/gu.png" alt="Yongfeng Gu"></div>
+        <div class="person-info"><div class="writing-sect"></div><p>Algorithm Expert</p><p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p><p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p></div>
+        <nav class="blog-toc" aria-label="Blog chapters">
+          <p class="blog-toc-title">Blog Chapters</p>
+          <a href="#scalability">When Q-Tables Break</a>
+          <a href="#core-idea">Neural Q-Function Approximation</a>
+          <a href="#architecture">Network Architecture</a>
+          <a href="#replay">Experience Replay</a>
+          <a href="#target-network">Target Network</a>
+          <a href="#algorithm">The Complete Algorithm</a>
+          <a href="#comparison">DQN vs. Q-Learning</a>
+          <a href="#summary">Summary</a>
+        </nav>
+      </div></div>
+      <div class="col-sm-9 content"><div tabindex="-1" id="notebook" class="border-box-sizing"><div class="container" id="notebook-container"><article class="text_cell_render border-box-sizing rendered_html">
+        <h3 style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px">From Q-Tables to Deep Q-Networks: Scaling Reinforcement Learning with Neural Networks</h3>
+        <p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">October 8, 2026</b></p>
+        <p><em><b>Q-Learning</b></em> works beautifully for small problems. But what happens when the state space explodes? In this post, we replace the Q-Table with a neural network and unlock the power of <strong>Deep Reinforcement Learning</strong>.</p>
+
+        <h5 id="scalability">The Scalability Problem: When Q-Tables Break</h5>
+        <p>Our 6x6 grid game has 36 states and 4 actions, so its Q-Table contains only 36 x 4 = 144 entries. This is trivially small. A 100x100 grid already has 10,000 states; adding items, battery levels, or moving obstacles makes the state space grow combinatorially.
+          The introduction to the 6x6 grid game please refers to my prior post: <a href="qlearning.html">Demystifying Q-Learning</a>.
+        </p>
+        <p>Besides, Real-world problems are even harder. The state space can be effectively infinite, so a Q-Table cannot be stored or learned. This is what we called the <strong>curse of dimensionality</strong>.</p>
+
+        <h5 id="core-idea">The Core Idea: Neural Networks as Q-Function Approximators</h5>
+        <p>Deep Q-Networks (DQN), introduced by Mnih et al. at DeepMind, replace the Q-Table with a neural network. The network accepts a state as input and outputs Q-values for every action.</p>
+        <pre>Q-Table:  Q(s, a) → lookup table entry
+DQN:      Q(s, a; θ) → neural network output</pre>
+        <p>Here, θ denotes the network weights. Rather than updating one table cell at a time, DQN uses gradient descent to reduce the difference between predicted Q-values and target Q-values. A neural network is a <strong>generalizer</strong>: it can estimate sensible values for a new state from similar states encountered during training.</p><hr>
+
+        <h5 id="architecture">The 6x6 Grid Game Revisited: Network Architecture</h5>
+        <p>For the grid robot, the network must accept the robot position and output values for Up, Down, Left, and Right. One simple state representation is a 36-dimensional <strong>one-hot vector</strong>.</p>
+        <pre>Position (2, 3) → index = 2 × 6 + 3 = 15
+[0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 1, 0, 0,  ← position 15
+ 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0]</pre>
+        <p>A fully connected DQN can use two hidden layers and one output layer:</p>
+        <pre>Input Layer:    36 neurons (one-hot state)
+     ↓
+Hidden Layer 1: 128 neurons, ReLU
+     ↓
+Hidden Layer 2: 128 neurons, ReLU
+     ↓
+Output Layer:   4 neurons (Q-values for actions)</pre>
+        <pre>import torch.nn as nn
+
+class QNetwork(nn.Module):
+    def __init__(self, state_dim=36, action_dim=4):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Linear(state_dim, 128), nn.ReLU(),
+            nn.Linear(128, 128), nn.ReLU(),
+            nn.Linear(128, action_dim))
+
+    def forward(self, state):
+        return self.network(state)</pre>
+        <p>For state (2, 3), an output such as <code>[45.2, 78.6, 32.1, 85.3]</code> means Right is currently the best action.</p><hr>
+
+        <h5>The Training Challenge: Why Naive DQN Fails</h5>
+        <p>Simply training a neural Q-function on sequential experience is unstable. First, consecutive transitions are highly correlated, while neural networks learn best from approximately independent samples. A long sequence in one region can cause overfitting and <strong>catastrophic forgetting</strong>.</p>
+        <p>Second, the Bellman target moves as the same network changes:</p>
+        <pre>target = r + γ · max₍a′₎ Q(s′, a′)</pre>
+        <p>Updating network weights changes both the prediction and its target, like chasing a moving target. DQN stabilizes this process with two key innovations.</p><hr>
+
+        <h5 id="replay">Innovation 1: Experience Replay</h5>
+        <p>Each transition <code>(s, a, r, s′, done)</code> is stored in a large <strong>replay buffer</strong>. Training then samples random mini-batches rather than using the newest consecutive transitions.</p>
+        <pre>Replay Buffer
+(s₁, a₁, r₁, s₂)  ← oldest
+(s₂, a₂, r₂, s₃)
+...
+(s₉₉₉₉₉, a₉₉₉₉₉, r₉₉₉₉₉, s₁₀₀₀₀₀)  ← newest
+
+Training: randomly sample 32 experiences</pre>
+        <ul><li><strong>Breaks correlation</strong> by mixing states, episodes, and time steps.</li><li><strong>Reuses past experience</strong>, including rare but valuable failures.</li><li><strong>Stabilizes learning</strong> by presenting a more representative state distribution.</li></ul>
+        <pre>class ReplayBuffer:
+    def __init__(self, capacity=100000):
+        self.buffer, self.capacity, self.position = [], capacity, 0
+
+    def push(self, experience):
+        if len(self.buffer) &lt; self.capacity:
+            self.buffer.append(None)
+        self.buffer[self.position] = experience
+        self.position = (self.position + 1) % self.capacity
+
+    def sample(self, batch_size=32):
+        return random.sample(self.buffer, batch_size)</pre><hr>
+
+        <h5 id="target-network">Innovation 2: Target Network</h5>
+        <p>DQN maintains two networks: <strong>Q_online</strong>, which is trained and selects actions, and <strong>Q_target</strong>, a frozen copy used only to calculate target values. Periodically, the online weights are copied to the target network.</p>
+        <pre>Q_online (trained every step)       Q_target (frozen)
+Weights: θ                    copy → Weights: θ⁻
+Action selection                    Target-value computation</pre>
+        <p>The training target becomes:</p>
+        <pre>target = r + γ · max₍a′₎ Q_target(s′, a′; θ⁻)</pre>
+        <p>Because θ⁻ is fixed between updates, the online network can learn toward a stable target. This is the central mechanism that makes DQN training practical.</p><hr>
+
+        <h5>argmax and max: Action Selection vs. Value Computation</h5>
+        <p><code>argmax</code> returns the action index, so it answers “which action is best?” <code>max</code> returns the value itself, so it answers “what is the best future value?”</p>
+        <pre>q_values_online = Q_online(state)
+best_action = torch.argmax(q_values_online).item()  # e.g. 3 (Right)
+
+q_values_target = Q_target(next_state)
+best_q_value = torch.max(q_values_target).item()    # e.g. 84.6</pre>
+        <p>In standard DQN, the online network is used to choose an action while the target network evaluates the next state. Separating these roles helps avoid instability from self-referential targets.</p><hr>
+
+        <h5 id="algorithm">The Complete DQN Algorithm</h5>
+        <pre>Initialize replay buffer D
+Initialize Q_online with random weights θ
+Initialize Q_target with θ⁻ = θ
+
+for each episode:
+    reset environment and encode state s
+
+    while episode is not done:
+        choose action a using ε-greedy Q_online
+        execute a; observe r, next state s′, and done
+        store (s, a, r, s′, done) in D
+
+        if D has enough experiences:
+            sample a random mini-batch from D
+            q_sa = Q_online(states).gather(actions)
+            targets = rewards + γ × max(Q_target(next_states)) × (1 - dones)
+            minimize MSE(q_sa, targets) with gradient descent
+
+        s ← s′
+
+    periodically copy Q_online weights to Q_target
+    decay ε</pre><hr>
+
+        <h5 id="comparison">DQN vs. Q-Learning: A Side-by-Side Comparison</h5>
+        <table><thead><tr><th>Aspect</th><th>Q-Learning (Tabular)</th><th>DQN</th></tr></thead><tbody>
+          <tr><td>Q-function</td><td>Q-Table</td><td>Neural network Q(s, a; θ)</td></tr>
+          <tr><td>State space</td><td>Small and discrete</td><td>Large or continuous</td></tr>
+          <tr><td>Samples</td><td>Current sequential episode</td><td>Random replay mini-batches</td></tr>
+          <tr><td>Target</td><td>Same Q-Table</td><td>Separate target network</td></tr>
+          <tr><td>Generalization</td><td>None</td><td>Similar states share estimates</td></tr>
+          <tr><td>Convergence</td><td>Guaranteed under assumptions</td><td>No general guarantee, effective in practice</td></tr>
+        </tbody></table>
+        <p><strong>Key insight:</strong> DQN retains Q-Learning's Bellman-guided trial-and-error idea. It replaces the lookup table with a neural network and adds replay plus a target network to make large-scale learning stable.</p><hr>
+
+        <h5>Why Does This Matter for Ad Bidding?</h5>
+        <p>Auto-bidding combines continuous budget, elapsed time, CTR, impressions, competitor behavior, and user features. Even a discretized version has billions of possible states. DQN can learn a Q-function that generalizes: a pattern such as “high budget + early time + high CTR” can inform actions in unseen but similar states.</p>
+        <p>Modern bidding systems often build on DQN variants such as Double DQN, Dueling DQN, and Rainbow. The core principle remains: learn action-values through experience, then scale the representation with neural networks.</p><hr>
+
+        <h5 id="summary">Summary</h5>
+        <table><thead><tr><th>Concept</th><th>What It Means</th></tr></thead><tbody>
+          <tr><td>Curse of Dimensionality</td><td>Q-Tables fail for large or continuous state spaces.</td></tr>
+          <tr><td>DQN</td><td>A neural network approximates Q(s, a; θ).</td></tr>
+          <tr><td>Experience Replay</td><td>Random buffer samples break correlation and reuse experience.</td></tr>
+          <tr><td>Target Network</td><td>A frozen Q_online copy provides stable targets.</td></tr>
+          <tr><td>Q_online / Q_target</td><td>The training network / the frozen target-value network.</td></tr>
+          <tr><td>Generalization</td><td>Similar states can receive related value estimates.</td></tr>
+        </tbody></table>
+        <p>DQN is a milestone in Deep Reinforcement Learning. With experience replay and target networks, neural Q-functions can solve problems that are impossible for tabular methods. The robot still learns one transition at a time—but it now has a memory of past mistakes, a stable target to pursue, and the capacity to generalize to much larger worlds.</p>
+      </article></div></div></div>
+    </div>
+  </div>
+  <script src="../js/jquery-3.3.1.slim.min.js"></script><script src="../js/popper.min.js"></script><script src="../js/bootstrap.min.js"></script>
+  <script>
+    (function () {
+      document.querySelectorAll('.site-nav-toggle').forEach(function (toggle) {
+        var nav = toggle.closest('.site-nav');
+        var links = nav.querySelectorAll('.site-nav-links a');
+        toggle.addEventListener('click', function () { var expanded = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!expanded)); nav.classList.toggle('is-open', !expanded); });
+        links.forEach(function (link) { link.addEventListener('click', function () { toggle.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); }); });
+      });
+    }());
+  </script>
+</body>
+</html>
