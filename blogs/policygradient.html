@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gu's Daily blogs - Policy Gradient</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Yongfeng">
+  <meta name="keywords" content="Yongfeng Gu, Policy Gradient, REINFORCE, Reinforcement Learning, Stochastic Policy, Backpropagation">
+  <meta name="description" content="A practical introduction to policy gradient methods, REINFORCE, stochastic policies, and trajectory-based learning.">
+  <link rel="icon" href="../favicon.png" type="image/png"><link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/bootstrap.min.css"><link rel="stylesheet" href="../css/index.css"><link rel="stylesheet" href="../css/jQueryBike.css">
+  <style id="tech-blog-theme">
+    #notebook { background: transparent !important; padding: 0 !important; }
+    #notebook-container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    #notebook-container, #notebook-container .rendered_html { color: #cbd5e1 !important; }
+    #notebook-container a, #notebook-container h1, #notebook-container h2, #notebook-container h4, #notebook-container h5 { color: #67e8f9 !important; }
+    #notebook-container a:hover { color: #c4b5fd !important; }
+    #notebook-container p { color: #cbd5e1 !important; font-size: .76rem !important; text-align: justify; }
+    #notebook-container strong { color: #f1f5f9 !important; } #notebook-container hr { border-color: rgba(148,163,184,.28) !important; }
+    #notebook-container pre, #notebook-container code { color: #e2e8f0 !important; background: #0b1424 !important; border-color: rgba(103,232,249,.18) !important; }
+    #notebook-container pre { padding: 12px; font-size: .76rem !important; white-space: pre; overflow-x: auto; }
+    #notebook-container ul, #notebook-container ol, #notebook-container li, #notebook-container code { font-size: .76rem !important; }
+    #notebook-container code { padding: 1px 4px; } #notebook-container table { width: 100%; color: #cbd5e1 !important; font-size: .76rem !important; background: #111c2e !important; }
+    #notebook-container th, #notebook-container td { padding: .75em .8em !important; font-size: .76rem !important; border: 1px solid rgba(148,163,184,.22); }
+    #notebook-container tbody tr:nth-child(odd) { background: rgba(148,163,184,.08); }
+    .site-nav-links { display: flex; align-items: center; gap: 8px; margin-left: 0; } .blog-toc { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(148,163,184,.2); }
+    .blog-toc-title { margin: 0 0 8px; color: #67e8f9; font-size: .78rem; font-weight: 700; text-align: center; }
+    .blog-toc a { display:block; padding:5px 0; color:#a5f3fc; font-size:.72rem; font-weight:700; line-height:1.4; text-align:left; text-decoration:none; }
+    .blog-toc a:hover { color:#c4b5fd; text-decoration:none; }
+    @media (max-width:767.98px) { .site-nav .site-nav-links { display:none; gap:4px; } .site-nav.is-open .site-nav-links { display:flex; } .main-page > .row > .sidebar { display:none !important; } #notebook, #notebook-container, #notebook-container .rendered_html { width:100% !important; max-width:100% !important; padding:0 !important; overflow-x:hidden !important; } #notebook-container table, #notebook-container pre { max-width:100% !important; overflow-x:auto !important; } }
+  </style>
+</head>
+<body>
+  <div class="container border main-page">
+    <nav class="site-nav" aria-label="Page sections"><span class="site-year-label"><img class="site-year-logo" src="https://assets.stickpng.com/images/62a221f6443b787d58371254.png" alt="Alibaba logo">Hello 2026</span><button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links-blog" aria-label="Toggle navigation">☰</button><div class="site-nav-links" id="site-nav-links-blog"><a href="../index.html">Home</a><a href="../index.html#biography">Biography</a><a href="../index.html#publications">Publications</a><a href="../index.html#blogs">Daily Blogs</a><a href="../index.html#awards">Awards</a></div></nav>
+    <div class="row"><div class="col-sm-3 sidebar"><div class="sidebar-content"><div class="person-image"><img src="../img/gu.png" alt="Yongfeng Gu"></div><div class="person-info"><div class="writing-sect"></div><p>Algorithm Expert</p><p class="yellow">Alibaba Group (AIDC) <br>Hangzhou, China</p><p><abbr title="E-mail">guyongfeng.gy@alibaba-inc.com</abbr></p></div><nav class="blog-toc" aria-label="Blog chapters"><p class="blog-toc-title">Blog Chapters</p><a href="#grid-world">The 6×6 Grid World</a><a href="#policy-based">From Value-Based to Policy-Based</a><a href="#architecture">Policy Network Architecture</a><a href="#reinforce">The REINFORCE Algorithm</a><a href="#learning">How the Policy Learns</a><a href="#gradients">Gradient Computation</a><a href="#algorithm">Complete Algorithm Flow</a><a href="#comparison">Comparison with Q-Learning and DQN</a><a href="#conclusion">Conclusion</a></nav></div></div>
+      <div class="col-sm-9 content"><div tabindex="-1" id="notebook" class="border-box-sizing"><div class="container" id="notebook-container"><article class="text_cell_render border-box-sizing rendered_html">
+        <h3 style="text-align:center;font-size:20pt;font-weight:bold;margin:30px;line-height:30px">Policy Gradient: Learning to Act by Learning What Works</h3>
+        <p style="text-align:center;font-size:12pt;margin:20px">Author: <b style="color:orange">Yongfeng Gu</b>, Date: <b style="color:orange">October 12, 2026</b></p>
+        <p><em><b>Policy Gradient</b></em> methods take a fundamentally different approach from Q-Learning and DQN. Instead of learning how good each action is before deriving a policy, they directly learn the policy itself: a neural network that outputs action probabilities and improves through trial and error.</p>
+        <h5 id="grid-world">The 6×6 Grid World</h5><p>Our robot starts at (0,0) and must reach G at (5,5). Mines carry a -100 penalty, lightning cells offer +5, reaching G earns +100, every move costs -1, and γ = 0.99.</p>
+        <pre>        col0   col1   col2   col3   col4   col5
+row0  [ S  ] [    ] [    ] [    ] [    ] [    ]
+row1  [    ] [ M  ] [    ] [    ] [ M  ] [    ]
+row2  [    ] [    ] [    ] [ L  ] [    ] [ M  ]
+row3  [    ] [ M  ] [    ] [    ] [    ] [    ]
+row4  [    ] [    ] [ M  ] [ L  ] [ M  ] [    ]
+row5  [    ] [    ] [    ] [    ] [    ] [ G  ]</pre>
+        <h5 id="policy-based">From Value-Based to Policy-Based</h5><p>Q-Learning derives a policy through <code>π(s) = argmaxₐ Q(s, a)</code> and separately uses ε-greedy exploration. Policy Gradient instead represents a stochastic policy directly:</p><pre>π(a|s; θ) = P(action = a | state = s, parameters = θ)
+J(θ) = E[total return]</pre><ul><li><strong>No argmax:</strong> actions are sampled from a probability distribution.</li><li><strong>No ε-greedy:</strong> stochasticity provides exploration.</li><li><strong>Direct optimization:</strong> gradient ascent maximizes J(θ).</li></ul>
+        <h5 id="architecture">The Policy Network Architecture</h5><pre>Input:  36-dimensional one-hot robot position
+        ↓
+        Linear(36, 128) + ReLU
+        ↓
+        Linear(128, 128) + ReLU
+        ↓
+        Linear(128, 4) → logits
+        ↓
+        Softmax → [π(Up|s), π(Down|s), π(Left|s), π(Right|s)]</pre><p>Its shared parameters θ allow a useful pattern learned in one state to generalize to similar states.</p>
+        <h5 id="reinforce">The REINFORCE Algorithm</h5><p>REINFORCE plays a complete episode, reinforces actions that produced good outcomes, and suppresses actions that produced bad ones.</p><pre>J(θ) = Eτ[R(τ)]
+∇θJ(θ) = Eτ[Σₜ ∇θ log π(aₜ|sₜ; θ) · Gₜ]
+Gₜ = Σₖ₌ₜᵀ γᵏ⁻ᵗrₖ
+L(θ) = -Σₜ₌₀ᵀ log π(aₜ|sₜ; θ) · Gₜ</pre><p>Every step contributes to the loss. Positive return increases the probability of its chosen action; negative return decreases it.</p>
+        <h5 id="learning">Step-by-Step: How the Policy Learns</h5><p>A trajectory that enters a mine has negative returns and lowers the probability of its decisions. A path that reaches lightning and then the goal has positive returns, reinforcing every action along that trajectory. After many episodes, the robot can learn to travel down the left column and then right along the bottom row.</p><pre>(0,0) → Right → (0,1) → Down → (1,1) = MINE!
+G₁ = -100; G₀ = -1 + 0.99 × (-100) ≈ -100</pre>
+        <h5 id="gradients">Gradient Computation and Backpropagation</h5><p>For a selected action aₜ, the Softmax log-likelihood gradient is:</p><pre>∂Lₜ/∂zⱼ = Gₜ × (π(j|sₜ) - 1)  if j = aₜ
+∂Lₜ/∂zⱼ = Gₜ × π(j|sₜ)          if j ≠ aₜ</pre><p>Backpropagation carries each contribution through all layers, while the final gradient sums contributions from every time step: <code>∂L/∂θ = Σₜ ∂Lₜ/∂θ</code>.</p>
+        <h5 id="algorithm">Complete Algorithm Flow</h5><pre>for each episode:
+    collect trajectory using current policy π
+    compute discounted returns Gₜ backward
+    loss = Σₜ -log π(aₜ|sₜ; θ) × Gₜ
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()</pre><table><thead><tr><th>Phase</th><th>Output</th></tr></thead><tbody><tr><td>Sampling</td><td>Complete trajectory.</td></tr><tr><td>Compute returns</td><td>[G₀, G₁, ..., Gₜ].</td></tr><tr><td>Compute loss</td><td>Scalar loss L.</td></tr><tr><td>Update parameters</td><td>Updated θ.</td></tr></tbody></table>
+        <h5 id="comparison">Comparison with Q-Learning and DQN</h5><table><thead><tr><th>Dimension</th><th>Q-Learning / DQN</th><th>Policy Gradient</th></tr></thead><tbody><tr><td>Learned quantity</td><td>Q(s, a): action values.</td><td>π(a|s): action probabilities.</td></tr><tr><td>Action selection</td><td>ε-greedy on Q-values.</td><td>Direct sampling from π.</td></tr><tr><td>Exploration</td><td>Explicit ε-greedy.</td><td>Automatic stochastic sampling.</td></tr><tr><td>Output</td><td>Q-values.</td><td>Probability distribution.</td></tr><tr><td>Suitable for</td><td>Small, discrete action spaces.</td><td>Discrete and continuous action spaces.</td></tr></tbody></table>
+        <h5>Connecting to Ad Bidding (RTA)</h5><p>For auto-bidding, the state can include remaining budget, pace, time of day, and performance metrics; actions can adjust the bid multiplier; and reward can represent KPI achievement. A policy-gradient model can directly learn a bidding strategy while naturally exploring alternatives.</p>
+        <h5 id="conclusion">Conclusion</h5><p>Policy Gradient changes the question from “How good is each action?” to “How likely should each action be?” REINFORCE follows three steps: <strong>play, evaluate, reinforce</strong>. It needs no value function, Bellman equation, or target network—only a policy network shaped by the consequences of its own actions.</p><p><em>This post is part of a series on RL fundamentals for ad bidding. Previous posts covered <a href="qlearning.html">Q-Learning</a> and DQN using the same 6×6 grid-world example.</em></p>
+      </article></div></div></div></div></div>
+  </div>
+  <script src="../js/jquery-3.3.1.slim.min.js"></script><script src="../js/popper.min.js"></script><script src="../js/bootstrap.min.js"></script><script>(function(){document.querySelectorAll('.site-nav-toggle').forEach(function(toggle){var nav=toggle.closest('.site-nav');var links=nav.querySelectorAll('.site-nav-links a');toggle.addEventListener('click',function(){var expanded=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!expanded));nav.classList.toggle('is-open',!expanded);});links.forEach(function(link){link.addEventListener('click',function(){toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-open');});});});}());</script>
+</body>
+</html>
